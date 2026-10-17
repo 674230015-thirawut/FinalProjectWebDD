@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'line' => [
+        'token' => env('LINE_NOTIFY_TOKEN'),
+    ],
+
 ];
