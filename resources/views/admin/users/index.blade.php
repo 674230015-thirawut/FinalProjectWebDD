@@ -5,25 +5,24 @@
 @section('content')
 <div class="space-y-6 max-w-6xl mx-auto">
 
-    <!-- Header -->
+    <!-- Header (No Icons) -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <h1 class="text-2xl font-black text-slate-900 tracking-tight">จัดการผู้ใช้งานและสิทธิ์ (Role-Based Access Control)</h1>
-            <p class="text-sm text-slate-500">กำหนดบทบาทผู้ใช้งานระหว่าง ผู้ใช้ทั่วไป (User), ช่างเทคนิค (Technician), และแอดมิน (Admin)</p>
+            <p class="text-sm text-slate-500 mt-0.5">กำหนดบทบาทผู้ใช้งานระหว่าง ผู้ใช้ทั่วไป (User), ช่างเทคนิค (Technician), และแอดมิน (Admin)</p>
         </div>
     </div>
 
     <!-- Users Table -->
-    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="p-4 border-b border-slate-100 flex items-center justify-between">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="shield" class="w-4 h-4 text-blue-600"></i>
-                <span>ผู้ใช้งานทั้งหมดในระบบ ({{ $users->count() }} บัญชี)</span>
+            <h3 class="text-sm font-bold text-slate-900">
+                ผู้ใช้งานทั้งหมดในระบบ ({{ $users->count() }} บัญชี)
             </h3>
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-slate-700">
+            <table class="w-full text-left text-xs text-slate-700 min-w-[800px]">
                 <thead class="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider">
                     <tr>
                         <th class="py-3 px-4">#</th>

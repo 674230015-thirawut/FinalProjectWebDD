@@ -5,21 +5,20 @@
 @section('content')
 <div class="space-y-6 max-w-5xl mx-auto">
 
-    <!-- Header -->
+    <!-- Header (No Icons) -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <h1 class="text-2xl font-black text-slate-900 tracking-tight">จัดการหมวดหมู่งานซ่อม</h1>
-            <p class="text-sm text-slate-500">กำหนดประเภทอุปกรณ์และปัญหาเพื่อให้ผู้แจ้งเลือกตอนแจ้งซ่อม</p>
+            <p class="text-sm text-slate-500 mt-0.5">กำหนดประเภทอุปกรณ์และปัญหาเพื่อให้ผู้แจ้งเลือกตอนแจ้งซ่อม</p>
         </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
         <!-- Add Category Form -->
-        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 self-start">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
-                <i data-lucide="plus-circle" class="w-4 h-4 text-blue-600"></i>
-                <span>เพิ่มหมวดหมู่ใหม่</span>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 self-start">
+            <h3 class="text-sm font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100">
+                + เพิ่มหมวดหมู่ใหม่
             </h3>
 
             <form action="{{ route('admin.categories.store') }}" method="POST" class="space-y-4">
@@ -36,18 +35,17 @@
                         class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
                 </div>
 
-                <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/25 transition">
+                <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition">
                     บันทึกหมวดหมู่ใหม่
                 </button>
             </form>
         </div>
 
         <!-- Categories Table -->
-        <div class="md:col-span-2 bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+        <div class="md:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="p-4 border-b border-slate-100">
-                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                    <i data-lucide="tags" class="w-4 h-4 text-slate-500"></i>
-                    <span>รายการหมวดหมู่ทั้งหมด ({{ $categories->count() }})</span>
+                <h3 class="text-sm font-bold text-slate-900">
+                    รายการหมวดหมู่ทั้งหมด ({{ $categories->count() }})
                 </h3>
             </div>
 

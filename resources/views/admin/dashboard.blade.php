@@ -5,83 +5,68 @@
 @section('content')
 <div class="space-y-6">
 
-    <!-- Header -->
+    <!-- Header (No Icons) -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <h1 class="text-2xl font-black text-slate-900 tracking-tight">แดชบอร์ดภาพรวมและการวิเคราะห์ (Admin Dashboard)</h1>
-            <p class="text-sm text-slate-500">สถิติและตัวชี้วัดประสิทธิภาพระบบแจ้งซ่อมไอที (Smart IT Helpdesk)</p>
+            <p class="text-sm text-slate-500 mt-0.5">สถิติและตัวชี้วัดประสิทธิภาพระบบแจ้งซ่อมไอที</p>
         </div>
-        <div class="text-xs text-slate-400 bg-white px-3 py-1.5 rounded-xl border border-slate-200 self-start sm:self-auto flex items-center gap-1.5">
-            <i data-lucide="calendar" class="w-3.5 h-3.5 text-blue-600"></i>
-            ข้อมูลอัปเดตล่าสุด: {{ now()->format('d/m/Y H:i น.') }}
+        <div class="text-xs text-slate-500 bg-white px-3 py-1.5 rounded-xl border border-slate-200 self-start sm:self-auto font-medium">
+            อัปเดตล่าสุด: {{ now()->format('d/m/Y H:i น.') }}
         </div>
     </div>
 
-    <!-- Top KPI Cards -->
+    <!-- Top KPI Cards (Clean Top Accent Borders, No Icons) -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="bg-white p-5 rounded-2xl border-t-4 border-t-blue-500 border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">งานทั้งหมด</span>
-                <span class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <i data-lucide="ticket" class="w-5 h-5"></i>
-                </span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-700">Total</span>
             </div>
-            <div class="text-3xl font-black text-slate-900 mt-3">{{ $totalTickets }}</div>
+            <div class="text-3xl font-black text-slate-900 mt-2">{{ $totalTickets }}</div>
             <div class="text-xs text-slate-400 mt-1">ใบแจ้งซ่อมสะสม</div>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="bg-white p-5 rounded-2xl border-t-4 border-t-amber-500 border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">รอดำเนินการ</span>
-                <span class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                    <i data-lucide="clock" class="w-5 h-5"></i>
-                </span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700">Pending</span>
             </div>
-            <div class="text-3xl font-black text-amber-700 mt-3">{{ $openTickets + $assignedTickets }}</div>
+            <div class="text-3xl font-black text-amber-700 mt-2">{{ $openTickets + $assignedTickets }}</div>
             <div class="text-xs text-amber-500 mt-1">รอช่างรับเรื่อง / มอบหมาย</div>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="bg-white p-5 rounded-2xl border-t-4 border-t-indigo-500 border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">กำลังซ่อม</span>
-                <span class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                    <i data-lucide="wrench" class="w-5 h-5"></i>
-                </span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-50 text-indigo-700">Progress</span>
             </div>
-            <div class="text-3xl font-black text-indigo-700 mt-3">{{ $inProgressTickets }}</div>
+            <div class="text-3xl font-black text-indigo-700 mt-2">{{ $inProgressTickets }}</div>
             <div class="text-xs text-indigo-500 mt-1">ช่างกำลังตรวจซ่อม</div>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="bg-white p-5 rounded-2xl border-t-4 border-t-emerald-500 border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">สำเร็จเสร็จสิ้น</span>
-                <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                    <i data-lucide="check-check" class="w-5 h-5"></i>
-                </span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700">Done</span>
             </div>
-            <div class="text-3xl font-black text-emerald-700 mt-3">{{ $resolvedTickets + $closedTickets }}</div>
-            <div class="text-xs text-emerald-500 mt-1">ซ่อมเสร็จ &amp; ปิดงาน</div>
+            <div class="text-3xl font-black text-emerald-700 mt-2">{{ $resolvedTickets + $closedTickets }}</div>
+            <div class="text-xs text-emerald-500 mt-1">ซ่อมเสร็จและปิดงาน</div>
         </div>
     </div>
 
     <!-- Secondary KPIs: Avg Resolution Time & Satisfaction Score -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-gradient-to-br from-indigo-900 to-blue-900 rounded-2xl p-6 text-white shadow-lg shadow-indigo-900/20">
-            <div class="flex items-center justify-between">
-                <div class="text-xs font-bold text-indigo-200 uppercase tracking-wider">ระยะเวลาเฉลี่ยในการซ่อม (Avg Resolution Time)</div>
-                <i data-lucide="timer" class="w-5 h-5 text-indigo-300"></i>
-            </div>
+        <div class="bg-gradient-to-br from-indigo-900 to-blue-900 rounded-2xl p-6 text-white shadow-md">
+            <div class="text-xs font-bold text-indigo-200 uppercase tracking-wider">ระยะเวลาเฉลี่ยในการซ่อม (Avg Resolution Time)</div>
             <div class="text-3xl font-black mt-3">
                 {{ number_format($avgResolutionHours, 1) }} <span class="text-base font-normal text-indigo-200">ชั่วโมง</span>
             </div>
             <p class="text-xs text-indigo-200/80 mt-1">คำนวณจากเวลาที่แจ้งซ่อมจนถึงเวลาที่ช่างกดซ่อมเสร็จ (Resolved)</p>
         </div>
 
-        <div class="bg-gradient-to-br from-amber-900 to-orange-900 rounded-2xl p-6 text-white shadow-lg shadow-amber-900/20">
-            <div class="flex items-center justify-between">
-                <div class="text-xs font-bold text-amber-200 uppercase tracking-wider">คะแนนความพึงพอใจเฉลี่ย (Customer Satisfaction)</div>
-                <i data-lucide="star" class="w-5 h-5 text-amber-300"></i>
-            </div>
+        <div class="bg-gradient-to-br from-amber-900 to-orange-900 rounded-2xl p-6 text-white shadow-md">
+            <div class="text-xs font-bold text-amber-200 uppercase tracking-wider">คะแนนความพึงพอใจเฉลี่ย (Customer Satisfaction)</div>
             <div class="text-3xl font-black mt-3 flex items-center gap-2">
                 <span>{{ number_format($avgRating, 1) }}</span>
                 <span class="text-lg text-amber-300">★ ★ ★ ★ ★</span>
@@ -94,11 +79,10 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         <!-- Category Distribution -->
-        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="folder" class="w-4 h-4 text-blue-600"></i>
-                    <span>การกระจายตามหมวดหมู่งานซ่อม</span>
+                <h3 class="text-sm font-bold text-slate-800">
+                    การกระจายตามหมวดหมู่งานซ่อม
                 </h3>
                 <span class="text-xs text-slate-400">{{ $categoriesStats->count() }} หมวดหมู่</span>
             </div>
@@ -122,11 +106,10 @@
         </div>
 
         <!-- Priority Breakdown -->
-        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="alert-triangle" class="w-4 h-4 text-orange-600"></i>
-                    <span>ระดับความสำคัญของปัญหา</span>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+            <div class="border-b border-slate-100 pb-3">
+                <h3 class="text-sm font-bold text-slate-800">
+                    ระดับความสำคัญของปัญหา
                 </h3>
             </div>
 
@@ -156,11 +139,10 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         <!-- Top Technicians Table -->
-        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="users" class="w-4 h-4 text-amber-600"></i>
-                    <span>ผลการดำเนินงานของทีมช่าง (Technicians Performance)</span>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+            <div class="border-b border-slate-100 pb-3">
+                <h3 class="text-sm font-bold text-slate-800">
+                    ผลการดำเนินงานของทีมช่าง (Technicians Performance)
                 </h3>
             </div>
 
@@ -200,38 +182,32 @@
         </div>
 
         <!-- Recent Status Change Activity Feed -->
-        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="activity" class="w-4 h-4 text-purple-600"></i>
-                    <span>กิจกรรมเปลี่ยนสถานะล่าสุด (Recent Status Logs)</span>
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+            <div class="border-b border-slate-100 pb-3">
+                <h3 class="text-sm font-bold text-slate-800">
+                    กิจกรรมเปลี่ยนสถานะล่าสุด (Recent Status Logs)
                 </h3>
             </div>
 
             <div class="space-y-3">
                 @forelse($recentLogs as $log)
-                <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold shrink-0">
-                        {{ mb_substr($log->changer->name, 0, 1) }}
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs space-y-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-slate-900">
+                            <a href="{{ route('tickets.show', $log->ticket_id) }}" class="hover:text-blue-600">
+                                ใบแจ้งซ่อม #{{ $log->ticket_id }}
+                            </a>
+                        </span>
+                        <span class="text-slate-400 text-[10px]">{{ $log->created_at->diffForHumans() }}</span>
                     </div>
-                    <div class="flex-1 text-xs space-y-0.5">
-                        <div class="flex items-center justify-between">
-                            <span class="font-bold text-slate-900">
-                                <a href="{{ route('tickets.show', $log->ticket_id) }}" class="hover:text-blue-600">
-                                    ใบแจ้งซ่อม #{{ $log->ticket_id }}
-                                </a>
-                            </span>
-                            <span class="text-slate-400 text-[10px]">{{ $log->created_at->diffForHumans() }}</span>
-                        </div>
-                        <div class="text-slate-600">
-                            {{ $log->changer->name }} เปลี่ยนสถานะ:
-                            <span class="font-semibold text-slate-800">{{ $log->from_status->label() }}</span> &rarr;
-                            <span class="font-bold text-blue-600">{{ $log->to_status->label() }}</span>
-                        </div>
-                        @if($log->note)
-                        <div class="text-[11px] text-slate-500 italic">"{{ $log->note }}"</div>
-                        @endif
+                    <div class="text-slate-600">
+                        {{ $log->changer->name }} เปลี่ยนสถานะ:
+                        <span class="font-semibold text-slate-800">{{ $log->from_status->label() }}</span> &rarr;
+                        <span class="font-bold text-blue-600">{{ $log->to_status->label() }}</span>
                     </div>
+                    @if($log->note)
+                    <div class="text-[11px] text-slate-500 italic">"{{ $log->note }}"</div>
+                    @endif
                 </div>
                 @empty
                 <div class="text-center py-6 text-xs text-slate-400">ยังไม่มีบันทึกกิจกรรม</div>
