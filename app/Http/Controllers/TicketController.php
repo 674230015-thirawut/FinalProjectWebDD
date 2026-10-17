@@ -236,4 +236,25 @@ class TicketController extends Controller
 
         return back()->with('success', 'ส่งความคิดเห็นเรียบร้อยแล้ว');
     }
+
+    /**
+     * Delete a comment from the ticket.
+     */
+    public function destroyComment(Ticket $ticket, Comment $comment)
+    {
+        $user = Auth::user();
+
+        // Only author or admin can delete
+        if ($comment->user_id !== $user->id && !$user->isAdmin()) {
+            abort(403, 'คุณไม่มีสิทธิ์ลบความคิดเห็นนี้');
+        }
+
+        if ($comment->image_path) {
+            Storage::disk('public')->delete($comment->image_path);
+        }
+
+        $comment->delete();
+
+        return back()->with('success', 'ลบข้อความเรียบร้อยแล้ว');
+    }
 }

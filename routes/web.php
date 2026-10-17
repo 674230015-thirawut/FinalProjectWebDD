@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.update-status');
     Route::post('/tickets/{ticket}/comments', [TicketController::class, 'addComment'])->name('tickets.add-comment');
+    Route::delete('/tickets/{ticket}/comments/{comment}', [TicketController::class, 'destroyComment'])->name('tickets.destroy-comment');
 
     // Admin Only Routes
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
@@ -47,6 +48,7 @@ Route::middleware('auth')->group(function () {
 
         // User Management
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
         Route::patch('/users/{user}/role', [UserController::class, 'updateRole'])->name('users.update-role');
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });

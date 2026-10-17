@@ -306,31 +306,50 @@
                     </h2>
                 </div>
 
-                <!-- Comment Items -->
+                <!-- Comment Items (Chat style: User on Right, Others on Left) -->
                 <div class="space-y-4">
                     @forelse($ticket->comments as $comment)
-                    <div class="flex gap-3">
-                        <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-300">
-                            {{ mb_substr($comment->user->name, 0, 1) }}
-                        </div>
-                        <div class="flex-1 bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2">
-                            <div class="flex items-center justify-between text-xs">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-bold text-slate-900">{{ $comment->user->name }}</span>
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold {{ $comment->user->role->badgeClasses() }}">
-                                        {{ $comment->user->role->label() }}
-                                    </span>
+                    @php $isMine = ($comment->user_id === Auth::id()); @endphp
+                    <div class="flex {{ $isMine ? 'justify-end' : 'justify-start' }}">
+                        <div class="flex items-start gap-2.5 max-w-[85%] {{ $isMine ? 'flex-row-reverse' : 'flex-row' }}">
+                            <!-- Avatar -->
+                            <div class="w-8 h-8 rounded-full {{ $isMine ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-700' }} font-bold text-xs flex items-center justify-center shrink-0 border border-slate-300">
+                                {{ mb_substr($comment->user->name, 0, 1) }}
+                            </div>
+
+                            <!-- Message Bubble -->
+                            <div class="{{ $isMine ? 'bg-blue-50 border border-blue-200 rounded-2xl rounded-tr-none' : 'bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-none' }} p-4 space-y-1.5 shadow-sm">
+                                <div class="flex items-center justify-between gap-3 text-xs">
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold {{ $isMine ? 'text-blue-900' : 'text-slate-900' }}">
+                                            {{ $isMine ? 'คุณ (' . $comment->user->name . ')' : $comment->user->name }}
+                                        </span>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold {{ $comment->user->role->badgeClasses() }}">
+                                            {{ $comment->user->role->label() }}
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-slate-400 text-[10px]">{{ $comment->created_at->diffForHumans() }}</span>
+                                        @if($comment->user_id === Auth::id() || Auth::user()->isAdmin())
+                                        <form action="{{ route('tickets.destroy-comment', [$ticket, $comment]) }}" method="POST" onsubmit="return confirm('ยืนยันลบความคิดเห็นนี้?');" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-[11px] text-rose-500 hover:text-rose-700 font-bold hover:underline ml-1" title="ลบความคิดเห็นนี้">
+                                                ลบ
+                                            </button>
+                                        </form>
+                                        @endif
+                                    </div>
                                 </div>
-                                <span class="text-slate-400">{{ $comment->created_at->diffForHumans() }}</span>
+                                <div class="text-sm text-slate-800 whitespace-pre-line leading-relaxed">{{ $comment->body }}</div>
+                                @if($comment->image_path)
+                                <div class="mt-2">
+                                    <a href="{{ asset('storage/' . $comment->image_path) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $comment->image_path) }}" class="max-h-52 rounded-xl border border-slate-200 hover:opacity-95 transition">
+                                    </a>
+                                </div>
+                                @endif
                             </div>
-                            <div class="text-sm text-slate-700 whitespace-pre-line leading-relaxed">{{ $comment->body }}</div>
-                            @if($comment->image_path)
-                            <div class="mt-2">
-                                <a href="{{ asset('storage/' . $comment->image_path) }}" target="_blank">
-                                    <img src="{{ asset('storage/' . $comment->image_path) }}" class="max-h-48 rounded-xl border border-slate-200 hover:opacity-90 transition">
-                                </a>
-                            </div>
-                            @endif
                         </div>
                     </div>
                     @empty
