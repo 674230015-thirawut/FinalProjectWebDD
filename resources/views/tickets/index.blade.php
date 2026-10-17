@@ -16,42 +16,72 @@
         </a>
     </div>
 
-    <!-- Quick Stat Badges (Clean Borders, No Icons) -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <a href="{{ route('tickets.index') }}" class="bg-white p-5 rounded-2xl border-t-4 border-t-slate-400 border border-slate-200 shadow-sm hover:border-slate-300 transition">
+    <!-- Quick Stat Badges: 6 Cards matching the exact 5 statuses & colors in table -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <!-- All -->
+        <a href="{{ route('tickets.index', request()->query('view') ? ['view' => request()->query('view')] : []) }}"
+            class="bg-white p-4 rounded-2xl border-t-4 border-t-slate-500 border border-slate-200 shadow-sm hover:border-slate-300 transition {{ !request()->filled('status') ? 'ring-2 ring-slate-400 bg-slate-50/50' : '' }}">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">ทั้งหมด</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 text-slate-600">รวม</span>
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">ทั้งหมด</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700">All</span>
             </div>
-            <div class="text-3xl font-black text-slate-900 mt-2">{{ $counts['all'] }}</div>
-            <div class="text-xs text-slate-400 mt-1">ใบแจ้งซ่อมทั้งหมด</div>
+            <div class="text-2xl font-black text-slate-900 mt-2">{{ $counts['all'] }}</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">ใบแจ้งทั้งหมด</div>
         </a>
 
-        <a href="{{ route('tickets.index', ['status' => 'Open']) }}" class="bg-white p-5 rounded-2xl border-t-4 border-t-blue-500 border border-slate-200 shadow-sm hover:border-blue-300 transition">
+        <!-- Open (Blue) -->
+        <a href="{{ route('tickets.index', array_merge(request()->query(), ['status' => 'Open'])) }}"
+            class="bg-white p-4 rounded-2xl border-t-4 border-t-blue-500 border border-slate-200 shadow-sm hover:border-blue-300 transition {{ request('status') === 'Open' ? 'ring-2 ring-blue-400 bg-blue-50/40' : '' }}">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">รอรับเรื่อง</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-700">Open</span>
+                <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">รอรับเรื่อง</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">Open</span>
             </div>
-            <div class="text-3xl font-black text-blue-700 mt-2">{{ $counts['open'] }}</div>
-            <div class="text-xs text-blue-500 mt-1">รอมอบหมายช่าง</div>
+            <div class="text-2xl font-black text-blue-700 mt-2">{{ $counts['open'] }}</div>
+            <div class="text-[11px] text-blue-500 mt-0.5">รอมอบหมายช่าง</div>
         </a>
 
-        <a href="{{ route('tickets.index', ['status' => 'InProgress']) }}" class="bg-white p-5 rounded-2xl border-t-4 border-t-indigo-500 border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+        <!-- Assigned (Amber / Yellow) -->
+        <a href="{{ route('tickets.index', array_merge(request()->query(), ['status' => 'Assigned'])) }}"
+            class="bg-white p-4 rounded-2xl border-t-4 border-t-amber-500 border border-slate-200 shadow-sm hover:border-amber-300 transition {{ request('status') === 'Assigned' ? 'ring-2 ring-amber-400 bg-amber-50/40' : '' }}">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">กำลังดำเนินการ</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-50 text-indigo-700">In Progress</span>
+                <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">มอบหมายแล้ว</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">Assigned</span>
             </div>
-            <div class="text-3xl font-black text-indigo-700 mt-2">{{ $counts['in_progress'] }}</div>
-            <div class="text-xs text-indigo-500 mt-1">มอบหมาย / กำลังซ่อม</div>
+            <div class="text-2xl font-black text-amber-700 mt-2">{{ $counts['assigned'] }}</div>
+            <div class="text-[11px] text-amber-600 mt-0.5">รอช่างเริ่มงาน</div>
         </a>
 
-        <a href="{{ route('tickets.index', ['status' => 'Closed']) }}" class="bg-white p-5 rounded-2xl border-t-4 border-t-emerald-500 border border-slate-200 shadow-sm hover:border-emerald-300 transition">
+        <!-- In Progress (Indigo) -->
+        <a href="{{ route('tickets.index', array_merge(request()->query(), ['status' => 'InProgress'])) }}"
+            class="bg-white p-4 rounded-2xl border-t-4 border-t-indigo-500 border border-slate-200 shadow-sm hover:border-indigo-300 transition {{ request('status') === 'InProgress' ? 'ring-2 ring-indigo-400 bg-indigo-50/40' : '' }}">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">เสร็จสิ้นแล้ว</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700">Closed</span>
+                <span class="text-xs font-bold text-indigo-700 uppercase tracking-wider">กำลังดำเนินการ</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-200">In Progress</span>
             </div>
-            <div class="text-3xl font-black text-emerald-700 mt-2">{{ $counts['resolved'] }}</div>
-            <div class="text-xs text-emerald-500 mt-1">ซ่อมเสร็จและปิดงาน</div>
+            <div class="text-2xl font-black text-indigo-700 mt-2">{{ $counts['in_progress'] }}</div>
+            <div class="text-[11px] text-indigo-500 mt-0.5">กำลังตรวจซ่อม</div>
+        </a>
+
+        <!-- Resolved (Purple) -->
+        <a href="{{ route('tickets.index', array_merge(request()->query(), ['status' => 'Resolved'])) }}"
+            class="bg-white p-4 rounded-2xl border-t-4 border-t-purple-500 border border-slate-200 shadow-sm hover:border-purple-300 transition {{ request('status') === 'Resolved' ? 'ring-2 ring-purple-400 bg-purple-50/40' : '' }}">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-purple-700 uppercase tracking-wider">ซ่อมเสร็จแล้ว</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-200">Resolved</span>
+            </div>
+            <div class="text-2xl font-black text-purple-700 mt-2">{{ $counts['resolved'] }}</div>
+            <div class="text-[11px] text-purple-500 mt-0.5">รอผู้แจ้งยืนยัน</div>
+        </a>
+
+        <!-- Closed (Emerald / Green) -->
+        <a href="{{ route('tickets.index', array_merge(request()->query(), ['status' => 'Closed'])) }}"
+            class="bg-white p-4 rounded-2xl border-t-4 border-t-emerald-500 border border-slate-200 shadow-sm hover:border-emerald-300 transition {{ request('status') === 'Closed' ? 'ring-2 ring-emerald-400 bg-emerald-50/40' : '' }}">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">ปิดงานเรียบร้อย</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">Closed</span>
+            </div>
+            <div class="text-2xl font-black text-emerald-700 mt-2">{{ $counts['closed'] }}</div>
+            <div class="text-[11px] text-emerald-600 mt-0.5">ประเมินผลสำเร็จ</div>
         </a>
     </div>
 

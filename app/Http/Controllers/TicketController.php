@@ -64,12 +64,24 @@ class TicketController extends Controller
         $statuses = TicketStatus::cases();
         $priorities = TicketPriority::cases();
 
-        // Summary counts
+        // Base query for counts respecting user role and active view filter
+        $baseCountQuery = Ticket::query();
+        if ($user->isUser()) {
+            $baseCountQuery->where('user_id', $user->id);
+        } elseif ($user->isTechnician() || $user->isAdmin()) {
+            if ($request->query('view') === 'mine') {
+                $baseCountQuery->where('technician_id', $user->id);
+            }
+        }
+
+        // Summary counts for all 5 statuses
         $counts = [
-            'all' => $user->isUser() ? Ticket::where('user_id', $user->id)->count() : Ticket::count(),
-            'open' => ($user->isUser() ? Ticket::where('user_id', $user->id) : Ticket::query())->where('status', TicketStatus::Open)->count(),
-            'in_progress' => ($user->isUser() ? Ticket::where('user_id', $user->id) : Ticket::query())->whereIn('status', [TicketStatus::Assigned, TicketStatus::InProgress])->count(),
-            'resolved' => ($user->isUser() ? Ticket::where('user_id', $user->id) : Ticket::query())->whereIn('status', [TicketStatus::Resolved, TicketStatus::Closed])->count(),
+            'all' => (clone $baseCountQuery)->count(),
+            'open' => (clone $baseCountQuery)->where('status', TicketStatus::Open)->count(),
+            'assigned' => (clone $baseCountQuery)->where('status', TicketStatus::Assigned)->count(),
+            'in_progress' => (clone $baseCountQuery)->where('status', TicketStatus::InProgress)->count(),
+            'resolved' => (clone $baseCountQuery)->where('status', TicketStatus::Resolved)->count(),
+            'closed' => (clone $baseCountQuery)->where('status', TicketStatus::Closed)->count(),
         ];
 
         return view('tickets.index', compact('tickets', 'categories', 'statuses', 'priorities', 'counts'));

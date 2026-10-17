@@ -16,42 +16,60 @@
         </div>
     </div>
 
-    <!-- Top KPI Cards (Clean Top Accent Borders, No Icons) -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-2xl border-t-4 border-t-blue-500 border border-slate-200 shadow-sm">
+    <!-- Top KPI Cards (Clean Top Accent Borders matching 5 statuses) -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div class="bg-white p-4 rounded-2xl border-t-4 border-t-slate-500 border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">งานทั้งหมด</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-700">Total</span>
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">งานทั้งหมด</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700">Total</span>
             </div>
-            <div class="text-3xl font-black text-slate-900 mt-2">{{ $totalTickets }}</div>
-            <div class="text-xs text-slate-400 mt-1">ใบแจ้งซ่อมสะสม</div>
+            <div class="text-2xl font-black text-slate-900 mt-2">{{ $totalTickets }}</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">ใบแจ้งทั้งหมด</div>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border-t-4 border-t-amber-500 border border-slate-200 shadow-sm">
+        <div class="bg-white p-4 rounded-2xl border-t-4 border-t-blue-500 border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">รอดำเนินการ</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700">Pending</span>
+                <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">รอรับเรื่อง</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">Open</span>
             </div>
-            <div class="text-3xl font-black text-amber-700 mt-2">{{ $openTickets + $assignedTickets }}</div>
-            <div class="text-xs text-amber-500 mt-1">รอช่างรับเรื่อง / มอบหมาย</div>
+            <div class="text-2xl font-black text-blue-700 mt-2">{{ $openTickets }}</div>
+            <div class="text-[11px] text-blue-500 mt-0.5">รอมอบหมายช่าง</div>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border-t-4 border-t-indigo-500 border border-slate-200 shadow-sm">
+        <div class="bg-white p-4 rounded-2xl border-t-4 border-t-amber-500 border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">กำลังซ่อม</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-50 text-indigo-700">Progress</span>
+                <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">มอบหมายแล้ว</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">Assigned</span>
             </div>
-            <div class="text-3xl font-black text-indigo-700 mt-2">{{ $inProgressTickets }}</div>
-            <div class="text-xs text-indigo-500 mt-1">ช่างกำลังตรวจซ่อม</div>
+            <div class="text-2xl font-black text-amber-700 mt-2">{{ $assignedTickets }}</div>
+            <div class="text-[11px] text-amber-600 mt-0.5">รอช่างเริ่มงาน</div>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border-t-4 border-t-emerald-500 border border-slate-200 shadow-sm">
+        <div class="bg-white p-4 rounded-2xl border-t-4 border-t-indigo-500 border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">สำเร็จเสร็จสิ้น</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700">Done</span>
+                <span class="text-xs font-bold text-indigo-700 uppercase tracking-wider">กำลังดำเนินการ</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-200">In Progress</span>
             </div>
-            <div class="text-3xl font-black text-emerald-700 mt-2">{{ $resolvedTickets + $closedTickets }}</div>
-            <div class="text-xs text-emerald-500 mt-1">ซ่อมเสร็จและปิดงาน</div>
+            <div class="text-2xl font-black text-indigo-700 mt-2">{{ $inProgressTickets }}</div>
+            <div class="text-[11px] text-indigo-500 mt-0.5">กำลังตรวจซ่อม</div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border-t-4 border-t-purple-500 border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-purple-700 uppercase tracking-wider">ซ่อมเสร็จแล้ว</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-200">Resolved</span>
+            </div>
+            <div class="text-2xl font-black text-purple-700 mt-2">{{ $resolvedTickets }}</div>
+            <div class="text-[11px] text-purple-500 mt-0.5">รอผู้แจ้งยืนยัน</div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border-t-4 border-t-emerald-500 border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">ปิดงานเรียบร้อย</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">Closed</span>
+            </div>
+            <div class="text-2xl font-black text-emerald-700 mt-2">{{ $closedTickets }}</div>
+            <div class="text-[11px] text-emerald-600 mt-0.5">ประเมินผลสำเร็จ</div>
         </div>
     </div>
 
