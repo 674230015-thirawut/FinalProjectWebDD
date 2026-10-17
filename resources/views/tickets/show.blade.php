@@ -72,13 +72,18 @@
             </div>
 
             <!-- Context-Aware State Machine Action Card -->
-            <div class="bg-gradient-to-br from-white to-blue-50/40 rounded-2xl border-2 border-blue-200 shadow-sm p-6">
-                <div class="flex items-center justify-between mb-4 pb-3 border-b border-blue-100">
-                    <div>
-                        <h2 class="text-base font-bold text-slate-900">การดำเนินการตามกระบวนการ (State Machine)</h2>
-                        <p class="text-xs text-slate-500">สิทธิ์และคำสั่งที่สามารถทำได้ตามสถานะปัจจุบัน</p>
+            <div class="bg-gradient-to-br from-emerald-50 to-green-50/60 rounded-2xl border-2 border-emerald-300 shadow-md p-6">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-emerald-200">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center shadow-sm flex-shrink-0">
+                            <span class="text-white text-base font-black">⚙</span>
+                        </div>
+                        <div>
+                            <h2 class="text-base font-bold text-slate-900">การดำเนินการตามกระบวนการ (State Machine)</h2>
+                            <p class="text-xs text-emerald-700">สิทธิ์และคำสั่งที่สามารถทำได้ตามสถานะปัจจุบัน</p>
+                        </div>
                     </div>
-                    <span class="px-2.5 py-1 rounded bg-blue-100 text-blue-800 text-xs font-bold">
+                    <span class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-bold shadow-sm">
                         สถานะ: {{ $ticket->status->label() }}
                     </span>
                 </div>
@@ -110,8 +115,9 @@
                             <input type="text" name="note" placeholder="เช่น มอบหมายด่วน ให้เข้าตรวจสอบช่วงบ่าย" class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm outline-none">
                         </div>
 
-                        <button type="submit" class="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-sm transition">
-                            มอบหมายงานให้ช่าง (Open &rarr; Assigned)
+                        <button type="submit" class="w-full px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
+                            <span class="text-base">✓</span>
+                            มอบหมายงานให้ช่าง (Open → Assigned)
                         </button>
                     </form>
                     @else
@@ -138,8 +144,9 @@
                             <input type="text" name="comment" value="รับทราบงานแล้ว กำลังเข้าไปตรวจสอบอุปกรณ์ครับ" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm outline-none">
                         </div>
 
-                        <button type="submit" class="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm transition">
-                            เริ่มดำเนินการซ่อม (Assigned &rarr; In Progress)
+                        <button type="submit" class="w-full px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
+                            <span class="text-base">▶</span>
+                            เริ่มดำเนินการซ่อม (Assigned → In Progress)
                         </button>
                     </form>
                     @else
@@ -171,8 +178,9 @@
                             <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
                         </div>
 
-                        <button type="submit" class="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 shadow-sm transition">
-                            บันทึกผลการซ่อมเสร็จสิ้น (In Progress &rarr; Resolved)
+                        <button type="submit" class="w-full px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
+                            <span class="text-base">✓</span>
+                            บันทึกผลการซ่อมเสร็จสิ้น (In Progress → Resolved)
                         </button>
                     </form>
                     @else
@@ -185,29 +193,79 @@
                 <!-- 4. Resolved -> Closed OR Resolved -> InProgress (For Ticket Owner or Admin) -->
                 @if($ticket->status === \App\Enums\TicketStatus::Resolved)
                     @if(Auth::user()->isAdmin() || $ticket->user_id === Auth::id())
-                    <div class="space-y-6" x-data="{ actionType: 'close' }">
-                        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-900 leading-relaxed">
-                            <strong>ช่างซ่อมเสร็จสิ้นแล้ว:</strong> โปรดตรวจสอบผลงาน และเลือกยืนยันปิดงาน หรือส่งกลับให้แก้ไข
+                    <div class="space-y-4" x-data="{ actionType: null }">
+                        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-start gap-3">
+                            <span class="text-emerald-600 text-lg mt-0.5">✓</span>
+                            <div class="text-sm text-emerald-900 leading-relaxed">
+                                <strong>ช่างดำเนินการซ่อมเสร็จสิ้นแล้ว:</strong> โปรดตรวจสอบการทำงานของอุปกรณ์ แล้ว<strong>กดเลือกหนึ่งในสองตัวเลือกด้านล่าง</strong>เพื่อดำเนินการต่อ
+                            </div>
                         </div>
 
-                        <div class="flex gap-2">
-                            <button type="button" @click="actionType = 'close'"
-                                :class="actionType === 'close' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-100 text-slate-700'"
-                                class="px-4 py-2 rounded-xl text-xs transition">
-                                ยืนยันผลการซ่อม &amp; ให้คะแนน (Closed)
+                        <!-- 2 Large Choice Buttons (User clicks to select first) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Button: Confirm & Rate -->
+                            <button type="button" @click="actionType = (actionType === 'close' ? null : 'close')"
+                                :class="actionType === 'close'
+                                    ? 'bg-emerald-600 text-white ring-4 ring-emerald-300 shadow-lg scale-[1.02]'
+                                    : 'bg-white text-slate-800 border-2 border-emerald-300 hover:border-emerald-500 hover:bg-emerald-50 hover:shadow-md'"
+                                class="p-5 rounded-2xl transition-all duration-200 text-left w-full cursor-pointer">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span :class="actionType === 'close' ? 'bg-emerald-500 text-white' : 'bg-emerald-100 text-emerald-700'"
+                                        class="w-10 h-10 rounded-xl flex items-center justify-center text-xl font-black transition-all duration-200">✓</span>
+                                    <div>
+                                        <div class="font-black text-base leading-tight">ยืนยันผลการซ่อม</div>
+                                        <div :class="actionType === 'close' ? 'text-emerald-100' : 'text-emerald-700'" class="text-xs font-semibold">&amp; ให้คะแนนความพึงพอใจ</div>
+                                    </div>
+                                </div>
+                                <div :class="actionType === 'close' ? 'text-emerald-100' : 'text-slate-400'" class="text-xs pl-1">อุปกรณ์ใช้งานได้ปกติ &bull; ปิดงาน (Closed)</div>
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span :class="actionType === 'close' ? 'bg-emerald-500 text-white' : 'bg-emerald-600 text-white'"
+                                        class="px-4 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-all duration-200">
+                                        <span x-text="actionType === 'close' ? '✓ เลือกอยู่แล้ว' : '▶ กดเลือกตัวนี้'"></span>
+                                    </span>
+                                </div>
                             </button>
-                            <button type="button" @click="actionType = 'rework'"
-                                :class="actionType === 'rework' ? 'bg-rose-600 text-white font-bold' : 'bg-slate-100 text-slate-700'"
-                                class="px-4 py-2 rounded-xl text-xs transition">
-                                พบปัญหายังไม่หาย / ส่งกลับแก้ไข (In Progress)
+
+                            <!-- Button: Problem still exists -->
+                            <button type="button" @click="actionType = (actionType === 'rework' ? null : 'rework')"
+                                :class="actionType === 'rework'
+                                    ? 'bg-rose-600 text-white ring-4 ring-rose-300 shadow-lg scale-[1.02]'
+                                    : 'bg-white text-slate-800 border-2 border-rose-300 hover:border-rose-500 hover:bg-rose-50 hover:shadow-md'"
+                                class="p-5 rounded-2xl transition-all duration-200 text-left w-full cursor-pointer">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span :class="actionType === 'rework' ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-700'"
+                                        class="w-10 h-10 rounded-xl flex items-center justify-center text-xl font-black transition-all duration-200">✕</span>
+                                    <div>
+                                        <div class="font-black text-base leading-tight">พบปัญหายังไม่หาย</div>
+                                        <div :class="actionType === 'rework' ? 'text-rose-100' : 'text-rose-700'" class="text-xs font-semibold">ส่งกลับให้ช่างแก้ไข</div>
+                                    </div>
+                                </div>
+                                <div :class="actionType === 'rework' ? 'text-rose-100' : 'text-slate-400'" class="text-xs pl-1">อาการยังไม่หาย &bull; ส่งช่างซ่อมต่อ (In Progress)</div>
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span :class="actionType === 'rework' ? 'bg-rose-500 text-white' : 'bg-rose-600 text-white'"
+                                        class="px-4 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-all duration-200">
+                                        <span x-text="actionType === 'rework' ? '✓ เลือกอยู่แล้ว' : '▶ กดเลือกตัวนี้'"></span>
+                                    </span>
+                                </div>
                             </button>
                         </div>
 
-                        <!-- Form A: Confirm & Rate -->
-                        <form x-show="actionType === 'close'" action="{{ route('tickets.update-status', $ticket) }}" method="POST" class="space-y-4">
+                        <!-- Initial Guide when neither is selected -->
+                        <div x-show="!actionType" class="text-center py-5 px-4 bg-white rounded-2xl border-2 border-dashed border-emerald-300 text-sm text-emerald-700 font-semibold">
+                            ⬆ กรุณากดเลือกหนึ่งในสองตัวเลือกด้านบน เพื่อเปิดแบบฟอร์มยืนยัน
+                        </div>
+
+                        <!-- Form A: Confirm & Rate (Expands ONLY when user clicks 'close') -->
+                        <form x-show="actionType === 'close'" x-cloak action="{{ route('tickets.update-status', $ticket) }}" method="POST"
+                            class="space-y-4 bg-white p-5 rounded-2xl border-2 border-emerald-200 shadow-sm animate-in fade-in duration-200">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="to_status" value="Closed">
+
+                            <div class="flex items-center justify-between pb-2 border-b border-emerald-100">
+                                <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider">แบบฟอร์มประเมินและยืนยันปิดงาน</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">ยืนยันผลการซ่อม</span>
+                            </div>
 
                             <div x-data="{ score: 5 }">
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-2">ประเมินความพึงพอใจการบริการ (1-5 ดาว) *</label>
@@ -224,32 +282,49 @@
 
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-1">ความคิดเห็น / ข้อเสนอแนะเพิ่มเติม</label>
-                                <textarea name="feedback" rows="2" placeholder="ช่างบริการรวดเร็ว ขอบคุณครับ" class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm outline-none"></textarea>
+                                <textarea name="feedback" rows="2" placeholder="ช่างบริการรวดเร็ว ขอบคุณครับ" class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
                             </div>
 
-                            <button type="submit" class="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 shadow-sm transition">
-                                ยืนยันปิดงานเรียบร้อย (Resolved &rarr; Closed)
-                            </button>
+                            <div class="flex items-center justify-between pt-3 border-t border-emerald-100">
+                                <button type="button" @click="actionType = null" class="text-xs text-slate-400 hover:text-slate-600 font-semibold flex items-center gap-1">
+                                    ← ยกเลิกการเลือก
+                                </button>
+                                <button type="submit" class="px-6 py-3 rounded-xl text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2">
+                                    <span>✓</span> ยืนยันปิดงานเรียบร้อย
+                                </button>
+                            </div>
                         </form>
 
-                        <!-- Form B: Reject with Reason -->
-                        <form x-show="actionType === 'rework'" x-cloak action="{{ route('tickets.update-status', $ticket) }}" method="POST" class="space-y-4">
+                        <!-- Form B: Reject with Reason (Expands ONLY when user clicks 'rework') -->
+                        <form x-show="actionType === 'rework'" x-cloak action="{{ route('tickets.update-status', $ticket) }}" method="POST"
+                            class="space-y-4 bg-white p-5 rounded-2xl border-2 border-rose-200 shadow-sm animate-in fade-in duration-200">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="to_status" value="InProgress">
 
+                            <div class="flex items-center justify-between pb-2 border-b border-rose-100">
+                                <span class="text-xs font-bold text-rose-800 uppercase tracking-wider">แบบฟอร์มส่งกลับให้ช่างแก้ไข</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800">ส่งกลับแก้ไข</span>
+                            </div>
+
                             <div class="bg-rose-50 border border-rose-200 rounded-xl p-3 text-xs text-rose-800">
-                                <strong>ระบุเหตุผลที่ส่งกลับ:</strong> แจ้งอาการที่ยังไม่หายเพื่อให้ช่างเทคนิคตรวจสอบเพิ่มเติม
+                                <strong>คำแนะนำ:</strong> กรุณาระบุอาการที่ยังพบอยู่หรือสาเหตุที่ยังใช้งานไม่ได้ เพื่อให้ช่างเทคนิคดำเนินการตรวจสอบแก้ไขต่อ
                             </div>
 
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-1">เหตุผลที่ส่งกลับแก้ไข *</label>
-                                <textarea name="note" rows="2" required placeholder="เช่น พอลองเปิดเครื่องแล้วยังมีเสียงดังผิดปกติอยู่เหมือนเดิม..." class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm outline-none"></textarea>
+                                <textarea name="note" rows="2" required placeholder="เช่น พอลองเปิดเครื่องแล้วยังมีเสียงดังผิดปกติอยู่เหมือนเดิม..." class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-rose-500"></textarea>
                             </div>
 
-                            <button type="submit" class="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 shadow-sm transition">
-                                ส่งกลับให้ช่างแก้ไข (Resolved &rarr; In Progress)
-                            </button>
+                            <div class="flex items-center justify-between pt-3 border-t border-rose-100">
+                                <button type="button" @click="actionType = null" class="text-xs text-slate-400 hover:text-slate-600 font-semibold flex items-center gap-1">
+                                    ← ยกเลิกการเลือก
+                                </button>
+                                <button type="submit" class="px-6 py-3 rounded-xl text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 active:bg-rose-800 shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2">
+                                    <span>✕</span> ส่งกลับให้ช่างแก้ไข
+                                </button>
+
+                            </div>
                         </form>
                     </div>
                     @else
