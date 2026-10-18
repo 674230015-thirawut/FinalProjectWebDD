@@ -51,7 +51,14 @@
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-200">In Progress</span>
             </div>
             <div class="text-2xl font-black text-indigo-700 mt-2">{{ $inProgressTickets }}</div>
-            <div class="text-[11px] text-indigo-500 mt-0.5">กำลังตรวจซ่อม</div>
+            <div class="text-[11px] text-indigo-500 mt-0.5 flex items-center justify-between">
+                <span>กำลังตรวจซ่อม</span>
+                @if(isset($pendingFixTickets) && $pendingFixTickets > 0)
+                <span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-bold text-[10px]" title="พบปัญหาซ้ำ รอแก้ไข">
+                    รอแก้ไข {{ $pendingFixTickets }}
+                </span>
+                @endif
+            </div>
         </div>
 
         <div class="bg-white p-4 rounded-2xl border-t-4 border-t-purple-500 border border-slate-200 shadow-sm">

@@ -59,7 +59,14 @@
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-200">In Progress</span>
             </div>
             <div class="text-2xl font-black text-indigo-700 mt-2">{{ $counts['in_progress'] }}</div>
-            <div class="text-[11px] text-indigo-500 mt-0.5">กำลังตรวจซ่อม</div>
+            <div class="text-[11px] text-indigo-500 mt-0.5 flex items-center justify-between">
+                <span>กำลังตรวจซ่อม</span>
+                @if(isset($counts['pending_fix']) && $counts['pending_fix'] > 0)
+                <span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-bold text-[10px]" title="พบปัญหาซ้ำ รอช่างแก้ไข">
+                    แก้ซ้ำ {{ $counts['pending_fix'] }}
+                </span>
+                @endif
+            </div>
         </a>
 
         <!-- Resolved (Purple) -->
@@ -207,6 +214,11 @@
                                 <span class="w-2 h-2 rounded-full {{ $ticket->status->dotColor() }}"></span>
                                 {{ $ticket->status->label() }}
                             </span>
+                            @if($ticket->status === \App\Enums\TicketStatus::PendingFix)
+                            <div class="text-[10px] text-amber-700 font-semibold mt-1">
+                                (จัดในกลุ่มรอดำเนินการ)
+                            </div>
+                            @endif
                         </td>
 
                         <!-- Requester -->

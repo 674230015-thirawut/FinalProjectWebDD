@@ -295,5 +295,63 @@ class DatabaseSeeder extends Seeder
             'feedback' => 'ช่างนำเมาส์ตัวใหม่มาเปลี่ยนให้อย่างรวดเร็วมากค่ะ พูดจาสุภาพ ขอบคุณมากนะคะ',
             'created_at' => now()->subDays(2)->addHours(2),
         ]);
+
+        // Ticket 6: PENDING FIX (Found duplicate problem -> Sent back for rework)
+        $t6 = Ticket::create([
+            'user_id' => $user2->id,
+            'category_id' => $catHardware->id,
+            'technician_id' => $tech1->id,
+            'title' => 'เครื่องพิมพ์ใบเสร็จพิมพ์ตัวอักษรจางและกระดาษติดซ้ำอีก',
+            'description' => 'เครื่องพิมพ์ยังคงพิมพ์จางมากและมีปัญหากระดาษติดขัดซ้ำ รบกวนช่างตรวจสอบแก้ไขใหม่อีกครั้งค่ะ',
+            'status' => TicketStatus::PendingFix,
+            'priority' => TicketPriority::High,
+            'created_at' => now()->subDays(1),
+        ]);
+        StatusLog::create([
+            'ticket_id' => $t6->id,
+            'changed_by' => $user2->id,
+            'from_status' => TicketStatus::Open,
+            'to_status' => TicketStatus::Open,
+            'note' => 'สร้างใบแจ้งซ่อม',
+            'created_at' => now()->subDays(1),
+        ]);
+        StatusLog::create([
+            'ticket_id' => $t6->id,
+            'changed_by' => $admin->id,
+            'from_status' => TicketStatus::Open,
+            'to_status' => TicketStatus::Assigned,
+            'note' => 'มอบหมายงานให้ช่าง: ' . $tech1->name,
+            'created_at' => now()->subHours(20),
+        ]);
+        StatusLog::create([
+            'ticket_id' => $t6->id,
+            'changed_by' => $tech1->id,
+            'from_status' => TicketStatus::Assigned,
+            'to_status' => TicketStatus::InProgress,
+            'note' => 'ช่างเข้าทำความสะอาดหัวพิมพ์',
+            'created_at' => now()->subHours(18),
+        ]);
+        StatusLog::create([
+            'ticket_id' => $t6->id,
+            'changed_by' => $tech1->id,
+            'from_status' => TicketStatus::InProgress,
+            'to_status' => TicketStatus::Resolved,
+            'note' => 'ทำความสะอาดลูกกลิ้งและหัวพิมพ์เรียบร้อย',
+            'created_at' => now()->subHours(12),
+        ]);
+        StatusLog::create([
+            'ticket_id' => $t6->id,
+            'changed_by' => $user2->id,
+            'from_status' => TicketStatus::Resolved,
+            'to_status' => TicketStatus::PendingFix,
+            'note' => 'พบปัญหาซ้ำ ส่งกลับไปแก้ไข: พอสั่งพิมพ์รอบบ่ายแล้วตัวหนังสือยังคงจางและกระดาษติดขัดเหมือนเดิม',
+            'created_at' => now()->subHours(5),
+        ]);
+        Comment::create([
+            'ticket_id' => $t6->id,
+            'user_id' => $user2->id,
+            'body' => '⚠️ พบปัญหาซ้ำ ส่งกลับไปแก้ไข (รอดำเนินการแก้ไข): ลองพิมพ์งานช่วงบ่ายแล้วพบว่าตัวหนังสือยังซีดจางและกระดาษติดขัดซ้ำ รบกวนช่างช่วยตรวจดูชุดความร้อนหรือลูกกลิ้งฟีดกระดาษอีกครั้งค่ะ',
+            'created_at' => now()->subHours(5),
+        ]);
     }
 }

@@ -42,7 +42,12 @@ class TicketController extends Controller
 
         // Filtering
         if ($request->filled('status')) {
-            $query->where('status', $request->query('status'));
+            $statusFilter = $request->query('status');
+            if ($statusFilter === 'InProgress') {
+                $query->whereIn('status', [TicketStatus::InProgress, TicketStatus::PendingFix]);
+            } else {
+                $query->where('status', $statusFilter);
+            }
         }
         if ($request->filled('priority')) {
             $query->where('priority', $request->query('priority'));
@@ -74,12 +79,13 @@ class TicketController extends Controller
             }
         }
 
-        // Summary counts for all 5 statuses
+        // Summary counts for statuses (InProgress includes PendingFix)
         $counts = [
             'all' => (clone $baseCountQuery)->count(),
             'open' => (clone $baseCountQuery)->where('status', TicketStatus::Open)->count(),
             'assigned' => (clone $baseCountQuery)->where('status', TicketStatus::Assigned)->count(),
-            'in_progress' => (clone $baseCountQuery)->where('status', TicketStatus::InProgress)->count(),
+            'in_progress' => (clone $baseCountQuery)->whereIn('status', [TicketStatus::InProgress, TicketStatus::PendingFix])->count(),
+            'pending_fix' => (clone $baseCountQuery)->where('status', TicketStatus::PendingFix)->count(),
             'resolved' => (clone $baseCountQuery)->where('status', TicketStatus::Resolved)->count(),
             'closed' => (clone $baseCountQuery)->where('status', TicketStatus::Closed)->count(),
         ];
@@ -178,7 +184,7 @@ class TicketController extends Controller
     public function updateStatus(Request $request, Ticket $ticket)
     {
         $validated = $request->validate([
-            'to_status' => 'required|string|in:Open,Assigned,InProgress,Resolved,Closed',
+            'to_status' => 'required|string|in:Open,Assigned,InProgress,PendingFix,Resolved,Closed',
             'technician_id' => 'nullable|exists:users,id',
             'note' => 'nullable|string',
             'comment' => 'nullable|string',

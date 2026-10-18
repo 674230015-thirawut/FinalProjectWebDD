@@ -21,7 +21,8 @@ class DashboardController extends Controller
         $totalTickets = Ticket::count();
         $openTickets = Ticket::where('status', TicketStatus::Open)->count();
         $assignedTickets = Ticket::where('status', TicketStatus::Assigned)->count();
-        $inProgressTickets = Ticket::where('status', TicketStatus::InProgress)->count();
+        $inProgressTickets = Ticket::whereIn('status', [TicketStatus::InProgress, TicketStatus::PendingFix])->count();
+        $pendingFixTickets = Ticket::where('status', TicketStatus::PendingFix)->count();
         $resolvedTickets = Ticket::where('status', TicketStatus::Resolved)->count();
         $closedTickets = Ticket::where('status', TicketStatus::Closed)->count();
 
@@ -66,6 +67,7 @@ class DashboardController extends Controller
             'openTickets',
             'assignedTickets',
             'inProgressTickets',
+            'pendingFixTickets',
             'resolvedTickets',
             'closedTickets',
             'avgResolutionHours',

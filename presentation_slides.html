@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart IT Helpdesk - สไลด์นำเสนอโครงงาน (ตัวอักษรใหญ่ ชัดเจน ธีมขาว-น้ำเงิน)</title>
+    <!-- Google Fonts: Prompt & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Prompt:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @page {
+            size: 16in 9in;
+            margin: 0;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: 'Prompt', 'Inter', sans-serif;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .slide {
+            width: 16in;
+            height: 9in;
+            padding: 45px 70px;
+            box-sizing: border-box;
+            page-break-after: always;
+            page-break-inside: avoid;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+        /* Top corporate stripe */
+        .slide::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 50%, #0284c7 100%);
+        }
+        .speaker-badge-1 {
+            background-color: #1e3a8a;
+            color: #ffffff;
+        }
+        .speaker-badge-2 {
+            background-color: #0284c7;
+            color: #ffffff;
+        }
+        .speaker-badge-both {
+            background-color: #0f172a;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         SLIDE 1: COVER
+         ========================================== -->
+    <div class="slide bg-white">
+        <!-- Top header row -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-900 flex items-center justify-center text-white font-black text-base">
+                    IT
+                </div>
+                <span class="text-sm font-bold uppercase tracking-wider text-blue-950">
+                    Web Application Project &bull; Laravel 11 Framework
+                </span>
+            </div>
+            <div class="px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-900 text-sm font-bold">
+                การนำเสนอผลงานโครงงาน (10 นาที) &bull; สไลด์ 1 / 10
+            </div>
+        </div>
+
+        <!-- Center Content -->
+        <div class="my-auto space-y-6 max-w-5xl">
+            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-950 text-base font-bold">
+                <span class="w-3 h-3 rounded-full bg-blue-600 animate-pulse"></span>
+                ระบบบริหารจัดการงานแจ้งซ่อมไอทีตามกระบวนการ STATE MACHINE
+            </div>
+
+            <h1 class="text-6xl sm:text-7xl font-black text-slate-900 tracking-tight leading-tight">
+                Smart IT Helpdesk &amp;<br>
+                <span class="text-blue-900">Service Tracking System</span>
+            </h1>
+
+            <p class="text-2xl text-slate-600 font-normal leading-relaxed max-w-4xl">
+                ระบบจัดการและติดตามงานแจ้งซ่อมอุปกรณ์ไอทีแบบรวมศูนย์ ควบคุมสถานะด้วย State Machine พร้อมระบบส่งงานกลับแก้ไขเมื่อพบปัญหาซ้ำ (Pending Fix) และแดชบอร์ดสถิติ
+            </p>
+        </div>
+
+        <!-- Bottom Presenters Bar -->
+        <div class="grid grid-cols-2 gap-8 pt-6 border-t border-slate-200">
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-5">
+                <div class="w-14 h-14 rounded-2xl bg-blue-900 flex items-center justify-center font-black text-white text-2xl shrink-0">
+                    1
+                </div>
+                <div>
+                    <div class="text-sm font-bold text-blue-900 uppercase tracking-wide">คนที่ 1 : Frontend &amp; Business Flow</div>
+                    <div class="text-lg font-bold text-slate-900 mt-1">ผู้ดูแลส่วนติดต่อผู้ใช้, ขั้นตอนการแจ้งซ่อม และ Live Demo (นาที 0:00 - 4:30)</div>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-5">
+                <div class="w-14 h-14 rounded-2xl bg-sky-700 flex items-center justify-center font-black text-white text-2xl shrink-0">
+                    2
+                </div>
+                <div>
+                    <div class="text-sm font-bold text-sky-800 uppercase tracking-wide">คนที่ 2 : Backend Architecture &amp; Core Logic</div>
+                    <div class="text-lg font-bold text-slate-900 mt-1">ผู้ดูแลสถาปัตยกรรม Laravel, State Machine, ความปลอดภัย และ Dashboard (นาที 4:30 - 9:00)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SLIDE 2: DIVISION OF RESPONSIBILITIES
+         ========================================== -->
+    <div class="slide bg-white">
+        <!-- Slide Header -->
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+            <div>
+                <span class="speaker-badge-both px-3.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">ภาพรวมทีมงาน</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5">การแบ่งหน้าที่และความรับผิดชอบของสมาชิก (2 คน)</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-sm text-slate-500 font-mono">00:00 - 01:00</span>
+                <div class="text-sm font-bold text-blue-900 mt-0.5">สไลด์ 2 / 10</div>
+            </div>
+        </div>
+
+        <!-- 2 Columns Role Cards -->
+        <div class="grid grid-cols-2 gap-8 my-auto">
+            <!-- Person 1 Card -->
+            <div class="p-7 rounded-2xl bg-white border-2 border-blue-900 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3 pb-2.5 border-b border-slate-100">
+                        <span class="speaker-badge-1 px-3.5 py-1.5 rounded-lg text-sm font-bold">คนที่ 1 (Speaker 1)</span>
+                        <span class="text-sm text-slate-600 font-mono font-bold">เวลาพูด: ~4.5 นาที</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-blue-950">Frontend, UI/UX &amp; กระบวนการผู้ใช้งาน</h3>
+                    <p class="text-base text-slate-500 mt-1 mb-5">รับผิดชอบส่วนติดต่อผู้ใช้ และการโต้ตอบตามวงจรชีวิตงานแจ้งซ่อม</p>
+
+                    <ul class="space-y-3.5 text-base text-slate-800 leading-relaxed">
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-900 font-black text-lg">✓</span>
+                            <span><strong>UI Components (Blade + Tailwind CSS):</strong> ออกแบบฟอร์มแจ้งซ่อม รายการตารางค้นหา และการ์ดแสดงผลสถานะ</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-900 font-black text-lg">✓</span>
+                            <span><strong>State Machine Interactive Box:</strong> ส่วนคำสั่งที่เปลี่ยนรูปแบบตามสิทธิ์และสถานะงานแบบไดนามิก</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-900 font-black text-lg">✓</span>
+                            <span><strong>Rework Interaction Flow:</strong> รองรับการส่งกลับแก้ไขเมื่อพบปัญหาซ้ำ และการกดยืนยันซ่อมเสร็จของช่าง</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-900 font-black text-lg">✓</span>
+                            <span><strong>Live Demonstration:</strong> สาธิตการทดลองใช้งานระบบจริงหน้าห้อง</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-6 pt-3.5 border-t border-slate-100 text-sm text-blue-900 font-mono font-semibold">
+                    เทคโนโลยี: Blade Templates, Tailwind CSS, Alpine.js
+                </div>
+            </div>
+
+            <!-- Person 2 Card -->
+            <div class="p-7 rounded-2xl bg-white border-2 border-sky-700 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3 pb-2.5 border-b border-slate-100">
+                        <span class="speaker-badge-2 px-3.5 py-1.5 rounded-lg text-sm font-bold">คนที่ 2 (Speaker 2)</span>
+                        <span class="text-sm text-slate-600 font-mono font-bold">เวลาพูด: ~4.5 นาที</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-sky-950">Backend Architecture &amp; Core Logic</h3>
+                    <p class="text-base text-slate-500 mt-1 mb-5">รับผิดชอบสถาปัตยกรรม Laravel, ตรรกะธุรกิจ, ความปลอดภัย และฐานข้อมูล</p>
+
+                    <ul class="space-y-3.5 text-base text-slate-800 leading-relaxed">
+                        <li class="flex items-start gap-3">
+                            <span class="text-sky-700 font-black text-lg">✓</span>
+                            <span><strong>System Architecture (MVC + Service):</strong> ออกแบบ <code>TicketStatusService</code> แยก Business Logic ออกจาก Controller</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-sky-700 font-black text-lg">✓</span>
+                            <span><strong>State Machine &amp; Transactions:</strong> ควบคุมกฎการเปลี่ยนสถานะ และความสมบูรณ์ข้อมูลด้วย <code>DB::transaction()</code></span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-sky-700 font-black text-lg">✓</span>
+                            <span><strong>Security &amp; RBAC:</strong> ควบคุมสิทธิ์ด้วย <code>RoleMiddleware</code> และ PHP 8.2 Backed Enums</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-sky-700 font-black text-lg">✓</span>
+                            <span><strong>Dashboard Analytics &amp; KPIs:</strong> คำนวณระยะเวลาเฉลี่ย (julianday), CSAT Rating และสถิติรายช่าง</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-6 pt-3.5 border-t border-slate-100 text-sm text-sky-900 font-mono font-semibold">
+                    เทคโนโลยี: Laravel 11, Eloquent ORM, SQLite/MySQL, Backed Enums
+                </div>
+            </div>
+        </div>
+
+        <div class="text-xs text-slate-400 flex justify-between items-center pt-2">
+            <span>การแบ่งบทบาทตามมาตรฐานการพัฒนาซอฟต์แวร์ Full-Stack แบบมืออาชีพ</span>
+            <span>Smart IT Helpdesk</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SLIDE 3: PROBLEM & OBJECTIVES
+         ========================================== -->
+    <div class="slide bg-white">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+            <div>
+                <span class="speaker-badge-1 px-3.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">คนที่ 1 นำเสนอ</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5">ที่มา ปัญหา และวัตถุประสงค์ของโครงงาน</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-sm text-slate-500 font-mono">01:00 - 02:00</span>
+                <div class="text-sm font-bold text-blue-900 mt-0.5">สไลด์ 3 / 10</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 my-auto">
+            <!-- Pain Points -->
+            <div class="p-7 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 text-rose-700 font-bold text-lg">
+                    <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center font-black text-base">✕</span>
+                    ปัญหาของระบบแจ้งซ่อมแบบเดิม (Pain Points)
+                </div>
+                <div class="space-y-4 text-base text-slate-700">
+                    <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                        <div class="font-bold text-slate-900 text-lg">1. การแจ้งซ่อมไร้ระบบบันทึก (LINE / วาจา)</div>
+                        <div class="text-slate-600 mt-1 leading-relaxed">ข้อมูลตกหล่น ไม่ทราบผู้รับผิดชอบ ไม่มีประวัติย้อนหลังสำหรับการตรวจสอบ</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                        <div class="font-bold text-slate-900 text-lg">2. ปัญหาซ้ำ (Repeat Issues) ไม่ถูกจัดการ</div>
+                        <div class="text-slate-600 mt-1 leading-relaxed">เมื่อซ่อมเสร็จแต่อาการเดิมยังไม่หาย ผู้แจ้งต้องเปิดใบงานใหม่ซ้ำซ้อน เสียเวลาทั้งสองฝ่าย</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                        <div class="font-bold text-slate-900 text-lg">3. ขาดตัวชี้วัดประสิทธิภาพ (KPIs)</div>
+                        <div class="text-slate-600 mt-1 leading-relaxed">หัวหน้างานไม่สามารถวัดระยะเวลาเฉลี่ยในการซ่อม และคะแนนความพึงพอใจของผู้ใช้ได้</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Objectives & Solution -->
+            <div class="p-7 rounded-2xl bg-blue-50/50 border border-blue-200 space-y-4">
+                <div class="flex items-center gap-3 text-blue-900 font-bold text-lg">
+                    <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-900 flex items-center justify-center font-black text-base">✓</span>
+                    แนวทางแก้ไขและวัตถุประสงค์ (Objectives)
+                </div>
+                <div class="space-y-4 text-base text-slate-700">
+                    <div class="p-4 rounded-xl bg-white border border-blue-100 shadow-sm">
+                        <div class="font-bold text-blue-950 text-lg">1. รวมศูนย์ข้อมูลบนเว็บแอปพลิเคชัน (Single Source)</div>
+                        <div class="text-slate-600 mt-1 leading-relaxed">บันทึกรายละเอียด อาการเสีย หมวดหมู่อุปกรณ์ ระดับความสำคัญ และรูปภาพแนบ</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white border border-blue-100 shadow-sm">
+                        <div class="font-bold text-blue-950 text-lg">2. กระบวนการส่งกลับไปแก้ไข (Rework Workflow)</div>
+                        <div class="text-slate-600 mt-1 leading-relaxed">รองรับสถานะ "รอดำเนินการแก้ไข" ให้ช่างซ่อมซ้ำและกดยืนยันเสร็จได้โดยไม่ต้องเปิดเคสใหม่</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white border border-blue-100 shadow-sm">
+                        <div class="font-bold text-blue-950 text-lg">3. ตรวจสอบย้อนหลังและประเมินผลอย่างโปร่งใส</div>
+                        <div class="text-slate-600 mt-1 leading-relaxed">มีระบบ Audit Trail บันทึกทุกขั้นตอน และให้คะแนน 1-5 ดาวก่อนปิดงานจริง</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-xs text-slate-400 flex justify-between items-center">
+            <span>เป้าหมาย: ยกระดับงานบริการไอทีภายในองค์กรให้มีมาตรฐานและวัดผลได้จริง</span>
+            <span>Smart IT Helpdesk</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SLIDE 4: SYSTEM ROLES & LIFECYCLE
+         ========================================== -->
+    <div class="slide bg-white">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+            <div>
+                <span class="speaker-badge-1 px-3.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">คนที่ 1 นำเสนอ</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5">บทบาทผู้ใช้งาน และวงจรสถานะงาน (State Lifecycle)</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-sm text-slate-500 font-mono">02:00 - 03:00</span>
+                <div class="text-sm font-bold text-blue-900 mt-0.5">สไลด์ 4 / 10</div>
+            </div>
+        </div>
+
+        <!-- 3 Roles Row -->
+        <div class="grid grid-cols-3 gap-6 my-auto">
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
+                <span class="px-3 py-1 rounded bg-blue-100 text-blue-900 font-bold text-xs uppercase tracking-wide">ROLE 1 : USER</span>
+                <div class="text-xl font-bold text-slate-900 mt-2.5">ผู้แจ้งซ่อม (พนักงานทั่วไป)</div>
+                <div class="text-base text-slate-600 mt-2 leading-relaxed">
+                    เปิด Ticket แจ้งปัญหา, ติดตามสถานะ, สนทนาตอบโต้, ยืนยันผลการซ่อม/ส่งกลับแก้ไข และให้คะแนนดาวความพึงพอใจ
+                </div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
+                <span class="px-3 py-1 rounded bg-amber-100 text-amber-900 font-bold text-xs uppercase tracking-wide">ROLE 2 : TECHNICIAN</span>
+                <div class="text-xl font-bold text-slate-900 mt-2.5">ช่างเทคนิค (IT Support)</div>
+                <div class="text-base text-slate-600 mt-2 leading-relaxed">
+                    รับงานที่ได้รับมอบหมาย, เริ่มงานซ่อม, ดำเนินการแก้ไขปัญหาซ้ำ, แนบรูปหลักฐานผลซ่อม, กดยืนยันซ่อมเสร็จ
+                </div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
+                <span class="px-3 py-1 rounded bg-slate-200 text-slate-800 font-bold text-xs uppercase tracking-wide">ROLE 3 : ADMIN</span>
+                <div class="text-xl font-bold text-slate-900 mt-2.5">ผู้ดูแลระบบ (IT Manager)</div>
+                <div class="text-base text-slate-600 mt-2 leading-relaxed">
+                    คัดกรองงาน, มอบหมายงานให้ช่างที่เหมาะสม, จัดการหมวดหมู่/ผู้ใช้ และติดตามสถิติภาพรวมผ่านแดชบอร์ด
+                </div>
+            </div>
+        </div>
+
+        <!-- Lifecycle Pipeline -->
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3.5">
+            <div class="text-sm font-bold text-slate-600 uppercase tracking-wider">วงจรกระบวนการ 6 สถานะหลัก (Lifecycle Pipeline)</div>
+            <div class="grid grid-cols-5 gap-3 text-center">
+                <div class="p-3.5 rounded-xl bg-white border border-blue-200 shadow-sm">
+                    <span class="text-xs font-bold text-blue-800 uppercase">1. Open</span>
+                    <div class="text-base font-bold text-slate-900 mt-1">รอรับเรื่อง</div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-white border border-amber-200 shadow-sm">
+                    <span class="text-xs font-bold text-amber-800 uppercase">2. Assigned</span>
+                    <div class="text-base font-bold text-slate-900 mt-1">มอบหมายช่าง</div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-white border border-indigo-200 shadow-sm">
+                    <span class="text-xs font-bold text-indigo-800 uppercase">3. In Progress</span>
+                    <div class="text-base font-bold text-slate-900 mt-1">กำลังตรวจซ่อม</div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-white border border-purple-200 shadow-sm">
+                    <span class="text-xs font-bold text-purple-800 uppercase">4. Resolved</span>
+                    <div class="text-base font-bold text-slate-900 mt-1">ซ่อมเสร็จแล้ว</div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-white border border-emerald-200 shadow-sm">
+                    <span class="text-xs font-bold text-emerald-800 uppercase">5. Closed</span>
+                    <div class="text-base font-bold text-slate-900 mt-1">ปิดงาน + ประเมิน</div>
+                </div>
+            </div>
+
+            <!-- Rework Branch -->
+            <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between text-base text-rose-950">
+                <span class="font-bold flex items-center gap-2">
+                    <span class="text-rose-600 font-black text-lg">↩</span>
+                    กรณีพบปัญหาซ้ำ (จาก Resolved):
+                </span>
+                <span class="text-sm leading-relaxed">ผู้แจ้งกดส่งกลับแก้ไข &rarr; เปลี่ยนสถานะเป็น <strong class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded border border-rose-200 font-bold">Pending Fix (รอดำเนินการแก้ไข)</strong> &rarr; ช่างตรวจสอบแก้ไข &rarr; กดซ่อมเสร็จ &rarr; วนกลับไป Resolved</span>
+            </div>
+        </div>
+
+        <div class="text-xs text-slate-400 flex justify-between items-center">
+            <span>ควบคุมการเคลื่อนที่ของข้อมูลตาม State Machine ป้องกันการข้ามขั้นตอน</span>
+            <span>Smart IT Helpdesk</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SLIDE 5: REPEAT ISSUE & REWORK
+         ========================================== -->
+    <div class="slide bg-white">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+            <div>
+                <span class="speaker-badge-1 px-3.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">คนที่ 1 นำเสนอ</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5">ฟังก์ชันเด่น: การจัดการปัญหาซ้ำ (Rework Workflow)</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-sm text-slate-500 font-mono">03:00 - 04:30</span>
+                <div class="text-sm font-bold text-blue-900 mt-0.5">สไลด์ 5 / 10</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 my-auto">
+            <!-- Requester Side -->
+            <div class="p-7 rounded-2xl bg-white border-2 border-rose-200 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
+                    <span class="text-sm font-bold text-rose-800 uppercase tracking-wider">การกระทำของผู้แจ้ง (Requester)</span>
+                    <span class="text-xs px-2.5 py-1 rounded bg-rose-100 text-rose-800 font-bold">ณ สถานะ Resolved</span>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900">ปุ่ม "พบปัญหาซ้ำ / ส่งกลับไปแก้ไข"</h3>
+                <p class="text-base text-slate-600 leading-relaxed">
+                    เมื่อช่างแจ้งว่าซ่อมเสร็จแล้ว แต่ผู้แจ้งตรวจสอบพบว่าอุปกรณ์ยังมีอาการเดิม สามารถเลือกตัวเลือกส่งกลับแก้ไข พร้อมพิมพ์ระบุอาการที่พบ
+                </p>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-sm space-y-2 text-slate-800">
+                    <div class="text-rose-800 font-bold text-base">&bull; ผลลัพธ์ในระบบ:</div>
+                    <div>1. ปรับสถานะเป็น <strong>รอดำเนินการแก้ไข (Pending Fix)</strong></div>
+                    <div>2. จัดกลุ่มอยู่ภายใต้ <strong>In Progress</strong> ในตัวกรองและแดชบอร์ด</div>
+                    <div>3. บันทึกประวัติลง Audit Logs, ข้อความสนทนา และแจ้งเตือนผ่าน LINE</div>
+                </div>
+            </div>
+
+            <!-- Technician Side -->
+            <div class="p-7 rounded-2xl bg-white border-2 border-emerald-300 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
+                    <span class="text-sm font-bold text-emerald-800 uppercase tracking-wider">การกระทำของช่าง (Technician)</span>
+                    <span class="text-xs px-2.5 py-1 rounded bg-emerald-100 text-emerald-800 font-bold">ณ สถานะ PendingFix</span>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900">ปุ่ม "กดซ่อมเสร็จแล้ว" สำหรับช่าง</h3>
+                <p class="text-base text-slate-600 leading-relaxed">
+                    ช่างเทคนิคจะเห็นกล่องแจ้งเตือนสีแดงพร้อมเหตุผลที่ถูกส่งกลับ เมื่อเข้าตรวจสอบแก้ไขเพิ่มเติมเสร็จสิ้นแล้ว สามารถกดยืนยันงานเสร็จได้ทันที
+                </p>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-sm space-y-2 text-slate-800">
+                    <div class="text-emerald-800 font-bold text-base">&bull; ผลลัพธ์ในระบบ:</div>
+                    <div>1. ช่างบันทึกผลการแก้ไขซ้ำ และสามารถแนบรูปถ่ายหลักฐาน</div>
+                    <div>2. กดปุ่ม <code class="bg-emerald-50 text-emerald-800 font-bold px-2 py-0.5 rounded border border-emerald-200">[ ✓ กดซ่อมเสร็จแล้ว ]</code> เพื่อปรับสถานะกลับเป็น <strong>Resolved</strong></div>
+                    <div>3. ส่งต่อให้ผู้แจ้งทดสอบใช้งานและประเมินดาวเพื่อปิดงานสมบูรณ์</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-xs text-slate-400 flex justify-between items-center">
+            <span>[ สลับช่วงการนำเสนอไปที่ คนที่ 2 เพื่ออธิบายสถาปัตยกรรม Laravel ]</span>
+            <span>Smart IT Helpdesk</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SLIDE 6: LARAVEL ARCHITECTURE
+         ========================================== -->
+    <div class="slide bg-white">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+            <div>
+                <span class="speaker-badge-2 px-3.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">คนที่ 2 นำเสนอ</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5">สถาปัตยกรรมระบบด้วย Laravel 11 Framework</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-sm text-slate-500 font-mono">04:30 - 05:30</span>
+                <div class="text-sm font-bold text-blue-900 mt-0.5">สไลด์ 6 / 10</div>
+            </div>
+        </div>
+
+        <!-- 3 Pillars -->
+        <div class="grid grid-cols-3 gap-6 my-auto">
+            <!-- MVC + Service -->
+            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                <span class="px-3 py-1 rounded bg-blue-100 text-blue-900 font-bold text-xs uppercase">เสาหลักที่ 1</span>
+                <h3 class="text-xl font-bold text-slate-900">MVC + Service Pattern</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    แยกตรรกะธุรกิจที่ซับซ้อนออกจาก Controller โดยใช้ <code>TicketStatusService</code> ทำให้โค้ดสะอาด ดูแลรักษาง่าย และนำไป Reuse ได้
+                </p>
+                <div class="p-2.5 rounded-lg bg-slate-50 text-xs font-mono text-slate-700 border border-slate-200 font-semibold">
+                    Controller &rarr; Service &rarr; Model / DB
+                </div>
+            </div>
+
+            <!-- Backed Enums -->
+            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                <span class="px-3 py-1 rounded bg-sky-100 text-sky-900 font-bold text-xs uppercase">เสาหลักที่ 2</span>
+                <h3 class="text-xl font-bold text-slate-900">PHP 8.2 Backed Enums</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    ใช้ Enums กำหนดค่าคงที่: <code>TicketStatus</code>, <code>TicketPriority</code>, <code>UserRole</code> พร้อม Method แสดง Label และสี Badge ในตัว
+                </p>
+                <div class="p-2.5 rounded-lg bg-slate-50 text-xs font-mono text-slate-700 border border-slate-200 font-semibold">
+                    TicketStatus::PendingFix-&gt;label()
+                </div>
+            </div>
+
+            <!-- Eloquent Relationships -->
+            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                <span class="px-3 py-1 rounded bg-slate-200 text-slate-800 font-bold text-xs uppercase">เสาหลักที่ 3</span>
+                <h3 class="text-xl font-bold text-slate-900">Eloquent ORM Model</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    เชื่อมโยงตารางข้อมูลผ่าน Eloquent: Ticket สัมพันธ์กับ Requester, Technician, Category, Comments, StatusLogs และ Rating อย่างเป็นระบบ
+                </p>
+                <div class="p-2.5 rounded-lg bg-slate-50 text-xs font-mono text-slate-700 border border-slate-200 font-semibold">
+                    HasMany / BelongsTo / HasOne
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 flex items-center justify-between">
+            <span><strong>โครงสร้างไฟล์หลัก:</strong> <code>app/Services/TicketStatusService.php</code>, <code>app/Enums/TicketStatus.php</code>, <code>app/Http/Controllers/TicketController.php</code></span>
+            <span class="text-blue-900 font-bold">Laravel 11 Clean Architecture</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SLIDE 7: STATE MACHINE & DATA INTEGRITY
+         ========================================== -->
+    <div class="slide bg-white">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+            <div>
+                <span class="speaker-badge-2 px-3.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">คนที่ 2 นำเสนอ</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5">กลไก State Machine และความถูกต้องของข้อมูล (Data Integrity)</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-sm text-slate-500 font-mono">05:30 - 07:00</span>
+                <div class="text-sm font-bold text-blue-900 mt-0.5">สไลด์ 7 / 10</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 my-auto">
+            <!-- State Machine Rules -->
+            <div class="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-blue-950 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-blue-700"></span>
+                    การควบคุมกฎการเปลี่ยนสถานะ (State Machine Rules)
+                </h3>
+                <p class="text-base text-slate-600 leading-relaxed">
+                    ใน <code>TicketStatusService::validateTransition()</code> มีการจำกัดเส้นทางการเปลี่ยนสถานะเพื่อป้องกันการข้ามขั้นตอนโดยไม่ได้รับอนุญาต
+                </p>
+                <div class="p-4 rounded-xl bg-slate-900 font-mono text-sm text-slate-200 leading-relaxed">
+                    <span class="text-slate-400">// กฎการเปลี่ยนสถานะที่ถูกอนุญาต</span><br>
+                    Open &rarr; Assigned<br>
+                    Assigned &rarr; InProgress<br>
+                    InProgress &rarr; Resolved<br>
+                    <strong class="text-rose-400">Resolved &rarr; Closed | PendingFix</strong><br>
+                    <strong class="text-emerald-400">PendingFix &rarr; Resolved</strong>
+                </div>
+            </div>
+
+            <!-- DB Transactions & Audit -->
+            <div class="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-blue-950 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-sky-600"></span>
+                    Atomic DB Transaction &amp; Audit Trail
+                </h3>
+                <p class="text-base text-slate-600 leading-relaxed">
+                    ทุกการเปลี่ยนสถานะถูกครอบด้วย <code>DB::transaction()</code> เพื่อให้การอัปเดตเกิดขึ้นพร้อมกันครบทุกส่วน หากมีจุดใดล้มเหลว ระบบจะ Rollback คืนค่าเดิมทันที
+                </p>
+                <div class="space-y-2.5 text-sm text-slate-800">
+                    <div class="flex items-center gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                        <span class="text-blue-900 font-black">1.</span>
+                        <span>อัปเดตตาราง <code>tickets</code> (สถานะ, วันที่เสร็จ/ปิดงาน)</span>
+                    </div>
+                    <div class="flex items-center gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                        <span class="text-blue-900 font-black">2.</span>
+                        <span>บันทึก Audit Log ลงตาราง <code>status_logs</code> อัตโนมัติ</span>
+                    </div>
+                    <div class="flex items-center gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                        <span class="text-blue-900 font-black">3.</span>
+                        <span>สร้างประวัติสนทนาลงในตาราง <code>comments</code></span>
+                    </div>
+                    <div class="flex items-center gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                        <span class="text-blue-900 font-black">4.</span>
+                        <span>ส่งข้อความแจ้งเตือนผ่าน <code>LineMessagingService</code></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-xs text-slate-400 flex justify-between items-center">
+            <span>รับประกันความถูกต้องของข้อมูลตามหลัก ACID Properties</span>
+            <span>Smart IT Helpdesk</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SLIDE 8: RBAC & SECURITY
+         ========================================== -->
+    <div class="slide bg-white">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+            <div>
+                <span class="speaker-badge-2 px-3.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">คนที่ 2 นำเสนอ</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5">ความปลอดภัยและการควบคุมสิทธิ์ (RBAC Security)</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-sm text-slate-500 font-mono">07:00 - 08:00</span>
+                <div class="text-sm font-bold text-blue-900 mt-0.5">สไลด์ 8 / 10</div>
+            </div>
+        </div>
+
+        <!-- 2 Layers Security -->
+        <div class="grid grid-cols-2 gap-8 my-auto">
+            <!-- Layer 1: Route Middleware -->
+            <div class="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center gap-3">
+                    <span class="px-3 py-1 rounded bg-blue-100 text-blue-900 font-bold text-xs uppercase">ชั้นที่ 1</span>
+                    <h3 class="text-xl font-bold text-slate-900">Route-Level Middleware</h3>
+                </div>
+                <p class="text-base text-slate-600 leading-relaxed">
+                    ใช้ <code>RoleMiddleware</code> ป้องกันการเข้าถึง URL ในระดับ Routing เช่น เส้นทาง <code>/admin/*</code> ป้องกันไม่ให้ User ทั่วไปเข้าถึง
+                </p>
+                <div class="p-4 rounded-xl bg-slate-900 font-mono text-sm text-slate-200 leading-relaxed">
+                    Route::middleware(['auth', 'role:Admin'])-&gt;prefix('admin')<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;-&gt;group(function () { ... });
+                </div>
+            </div>
+
+            <!-- Layer 2: Action-Level Authorization -->
+            <div class="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center gap-3">
+                    <span class="px-3 py-1 rounded bg-sky-100 text-sky-900 font-bold text-xs uppercase">ชั้นที่ 2</span>
+                    <h3 class="text-xl font-bold text-slate-900">Action-Level Authorization</h3>
+                </div>
+                <p class="text-base text-slate-600 leading-relaxed">
+                    ตรวจสอบสิทธิ์ในฟังก์ชัน <code>checkPermission()</code> ละเอียดถึงระดับบุคคลและสถานะงาน:
+                </p>
+                <ul class="space-y-3 text-sm text-slate-800">
+                    <li class="flex items-start gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                        <span class="text-blue-900 font-black text-base">&bull;</span>
+                        <span><strong>มอบหมายงาน:</strong> เฉพาะ Admin เท่านั้น</span>
+                    </li>
+                    <li class="flex items-start gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                        <span class="text-blue-900 font-black text-base">&bull;</span>
+                        <span><strong>กดซ่อมเสร็จ:</strong> เฉพาะช่างเทคนิค (Technician) หรือ Admin</span>
+                    </li>
+                    <li class="flex items-start gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                        <span class="text-blue-900 font-black text-base">&bull;</span>
+                        <span><strong>ยืนยันปิดงาน / ส่งกลับแก้ไข:</strong> เฉพาะเจ้าของใบแจ้งซ่อม (Ticket Owner)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-xs text-slate-400 flex justify-between items-center">
+            <span>ป้องกันการยิงข้ามสิทธิ์ทั้งระดับ HTTP Request และ Domain Logic Layer</span>
+            <span>Smart IT Helpdesk</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SLIDE 9: ADMIN DASHBOARD & BI
+         ========================================== -->
+    <div class="slide bg-white">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+            <div>
+                <span class="speaker-badge-2 px-3.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">คนที่ 2 นำเสนอ</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5">แดชบอร์ดสถิติและการวิเคราะห์ผล (Admin BI Dashboard)</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-sm text-slate-500 font-mono">08:00 - 09:00</span>
+                <div class="text-sm font-bold text-blue-900 mt-0.5">สไลด์ 9 / 10</div>
+            </div>
+        </div>
+
+        <!-- 4 KPI Cards -->
+        <div class="grid grid-cols-4 gap-5 my-auto">
+            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                <div class="text-xs font-bold text-slate-500 uppercase tracking-wide">ใบแจ้งซ่อมทั้งหมด</div>
+                <div class="text-4xl font-black text-slate-900 mt-2">Total Tickets</div>
+                <div class="text-sm text-blue-900 mt-1 font-semibold">ติดตามแบบ Real-Time</div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-white border border-blue-200 shadow-sm">
+                <div class="text-xs font-bold text-blue-900 uppercase tracking-wide">กำลังดำเนินการ</div>
+                <div class="text-4xl font-black text-blue-900 mt-2">In Progress</div>
+                <div class="text-sm text-slate-600 mt-1 font-semibold">นับรวมงานรอแก้ไขซ้ำ</div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-white border border-amber-200 shadow-sm">
+                <div class="text-xs font-bold text-amber-900 uppercase tracking-wide">เวลาเฉลี่ยในการซ่อม</div>
+                <div class="text-4xl font-black text-amber-900 mt-2">Avg. Resolution</div>
+                <div class="text-sm text-slate-600 mt-1 font-semibold">คำนวณผ่าน SQLite/MySQL</div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-white border border-emerald-200 shadow-sm">
+                <div class="text-xs font-bold text-emerald-900 uppercase tracking-wide">ความพึงพอใจเฉลี่ย</div>
+                <div class="text-4xl font-black text-emerald-900 mt-2">CSAT Rating</div>
+                <div class="text-sm text-slate-600 mt-1 font-semibold">คะแนนเฉลี่ย 1 - 5 ดาว</div>
+            </div>
+        </div>
+
+        <!-- 2 Data Breakdowns -->
+        <div class="grid grid-cols-2 gap-8">
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-sm space-y-2">
+                <div class="font-bold text-slate-900 text-base">การจัดกลุ่มสถานะ (Status Grouping Analysis)</div>
+                <p class="text-slate-600 leading-relaxed text-base">
+                    สถานะ <strong>"รอดำเนินการแก้ไข (PendingFix)"</strong> ถูกจัดให้อยู่ในกลุ่ม <strong>In Progress</strong> เพื่อให้ยอดรวมงานที่กำลังซ่อมแซมสะท้อนปริมาณงานจริงของฝ่าย IT อย่างถูกต้อง
+                </p>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-sm space-y-2">
+                <div class="font-bold text-slate-900 text-base">ประสิทธิภาพรายช่าง (Technician Performance)</div>
+                <p class="text-slate-600 leading-relaxed text-base">
+                    ระบบคำนวณยอดงานที่ได้รับมอบหมาย เทียบกับยอดงานที่ซ่อมเสร็จสิ้นรายบุคคล ช่วยให้หัวหน้าทีม IT วางแผนกระจายงานได้อย่างเท่าเทียมและมีประสิทธิภาพ
+                </p>
+            </div>
+        </div>
+
+        <div class="text-xs text-slate-400 flex justify-between items-center">
+            <span>เปลี่ยนข้อมูลงานซ่อมแซมให้กลายเป็นขุมพลังการตัดสินใจเชิงบริหาร</span>
+            <span>Smart IT Helpdesk</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SLIDE 10: CONCLUSION & QA
+         ========================================== -->
+    <div class="slide bg-white">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+            <div>
+                <span class="speaker-badge-both px-3.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">ทั้ง 2 คนร่วมสรุป</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5">สรุปผลลัพธ์โครงงาน และช่วงถาม-ตอบ (Q&amp;A)</h2>
+            </div>
+            <div class="text-right">
+                <span class="text-sm text-slate-500 font-mono">09:00 - 10:00</span>
+                <div class="text-sm font-bold text-blue-900 mt-0.5">สไลด์ 10 / 10</div>
+            </div>
+        </div>
+
+        <!-- 3 Highlights -->
+        <div class="grid grid-cols-3 gap-6 my-auto">
+            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                <div class="text-3xl font-black text-blue-900">01</div>
+                <div class="font-bold text-slate-900 text-lg">ระบบทำงานได้สมบูรณ์จริง</div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    ครอบคลุมวงจรชีวิตงานซ่อมตั้งแต่แจ้งซ่อม มอบหมาย ซ่อมแซม จัดการปัญหาซ้ำ จนถึงการประเมินดาวปิดงาน
+                </p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                <div class="text-3xl font-black text-sky-800">02</div>
+                <div class="font-bold text-slate-900 text-lg">Laravel Architecture แข็งแกร่ง</div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    ประยุกต์ใช้ Service Pattern, DB Transactions, Eloquent ORM และ Enums ตามมาตรฐานซอฟต์แวร์ระดับสากล
+                </p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                <div class="text-3xl font-black text-slate-700">03</div>
+                <div class="font-bold text-slate-900 text-lg">การแบ่งงาน 2 คนที่มีประสิทธิภาพ</div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    แยกส่วน Frontend/UX และ Backend Engine ทำให้สามารถพัฒนาและต่อยอดระบบได้อย่างรวดเร็วและเป็นมืออาชีพ
+                </p>
+            </div>
+        </div>
+
+        <!-- QA Box -->
+        <div class="p-7 rounded-2xl bg-blue-50 border border-blue-200 text-center space-y-2.5">
+            <h3 class="text-2xl font-black text-blue-950">ขอขอบคุณคณะกรรมการและอาจารย์ทุกท่าน</h3>
+            <p class="text-base text-slate-600">ยินดีรับฟังคำถาม ข้อเสนอแนะ และพร้อมสาธิตซอร์สโค้ดเพิ่มเติมครับ</p>
+        </div>
+
+        <div class="text-xs text-slate-400 flex justify-between items-center">
+            <span>Smart IT Helpdesk &bull; พัฒนาด้วย Laravel 11 Framework</span>
+            <span class="font-mono text-slate-500">End of Presentation</span>
+        </div>
+    </div>
+
+</body>
+</html>

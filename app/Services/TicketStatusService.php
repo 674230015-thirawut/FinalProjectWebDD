@@ -72,15 +72,16 @@ class TicketStatusService
                 }
             }
 
-            // Scenario 3: InProgress -> Resolved
-            if ($currentStatus === TicketStatus::InProgress && $newStatus === TicketStatus::Resolved) {
+            // Scenario 3: InProgress / PendingFix -> Resolved
+            if (($currentStatus === TicketStatus::InProgress || $currentStatus === TicketStatus::PendingFix) && $newStatus === TicketStatus::Resolved) {
                 $updateData['resolved_at'] = now();
-                $logNote = $logNote ?: 'ช่างดำเนินการซ่อมเสร็จสิ้น';
+                $isRework = ($currentStatus === TicketStatus::PendingFix);
+                $logNote = $logNote ?: ($isRework ? 'ช่างดำเนินการแก้ไขปัญหาซ้ำเสร็จสิ้น ยืนยันงานเสร็จแล้ว' : 'ช่างดำเนินการซ่อมเสร็จสิ้น');
                 if (!empty($payload['comment']) || !empty($payload['image_path'])) {
                     Comment::create([
                         'ticket_id' => $ticket->id,
                         'user_id' => $actor->id,
-                        'body' => $payload['comment'] ?: 'ซ่อมแซมเสร็จสิ้น พร้อมส่งมอบงาน',
+                        'body' => $payload['comment'] ?: ($isRework ? 'แก้ไขปัญหาซ้ำเรียบร้อยแล้ว ยืนยันงานเสร็จสิ้น พร้อมส่งมอบงาน' : 'ซ่อมแซมเสร็จสิ้น พร้อมส่งมอบงาน'),
                         'image_path' => $payload['image_path'] ?? null,
                     ]);
                 }
@@ -102,16 +103,16 @@ class TicketStatusService
                 }
             }
 
-            // Scenario 5: Resolved -> InProgress (Rejection)
-            if ($currentStatus === TicketStatus::Resolved && $newStatus === TicketStatus::InProgress) {
+            // Scenario 5: Resolved -> PendingFix (Rejection / Repeat Problem)
+            if ($currentStatus === TicketStatus::Resolved && ($newStatus === TicketStatus::PendingFix || $newStatus === TicketStatus::InProgress)) {
                 $updateData['resolved_at'] = null;
-                $reason = $payload['note'] ?? $payload['comment'] ?? 'ผู้แจ้งขอส่งกลับให้ตรวจสอบใหม่';
-                $logNote = 'ส่งงานกลับให้แก้ไข: ' . $reason;
+                $reason = $payload['note'] ?? $payload['comment'] ?? 'ผู้แจ้งพบปัญหาซ้ำ ขอส่งกลับให้ตรวจสอบแก้ไขใหม่';
+                $logNote = 'พบปัญหาซ้ำ ส่งกลับไปแก้ไข: ' . $reason;
 
                 Comment::create([
                     'ticket_id' => $ticket->id,
                     'user_id' => $actor->id,
-                    'body' => '❌ ส่งงานกลับเพื่อแก้ไข: ' . $reason,
+                    'body' => '⚠️ พบปัญหาซ้ำ ส่งกลับไปแก้ไข (รอดำเนินการแก้ไข): ' . $reason,
                 ]);
             }
 
@@ -142,7 +143,8 @@ class TicketStatusService
             TicketStatus::Open->value => [TicketStatus::Assigned->value],
             TicketStatus::Assigned->value => [TicketStatus::InProgress->value],
             TicketStatus::InProgress->value => [TicketStatus::Resolved->value],
-            TicketStatus::Resolved->value => [TicketStatus::Closed->value, TicketStatus::InProgress->value],
+            TicketStatus::PendingFix->value => [TicketStatus::Resolved->value],
+            TicketStatus::Resolved->value => [TicketStatus::Closed->value, TicketStatus::PendingFix->value, TicketStatus::InProgress->value],
             TicketStatus::Closed->value => [],
         ];
 
@@ -165,21 +167,21 @@ class TicketStatusService
             throw new InvalidArgumentException('เฉพาะผู้ดูแลระบบ (Admin) เท่านั้นที่สามารถมอบหมายงานได้');
         }
 
-        // Assigned -> InProgress requires Assigned Technician
+        // Assigned -> InProgress requires Technician
         if ($from === TicketStatus::Assigned && $to === TicketStatus::InProgress) {
-            if (!$actor->isTechnician() || $ticket->technician_id !== $actor->id) {
-                throw new InvalidArgumentException('เฉพาะช่างที่ได้รับมอบหมายเท่านั้นที่สามารถกดรับงานได้');
+            if (!$actor->isTechnician()) {
+                throw new InvalidArgumentException('เฉพาะช่างเทคนิคเท่านั้นที่สามารถกดรับงานได้');
             }
         }
 
-        // InProgress -> Resolved requires Assigned Technician
-        if ($from === TicketStatus::InProgress && $to === TicketStatus::Resolved) {
-            if (!$actor->isTechnician() || $ticket->technician_id !== $actor->id) {
-                throw new InvalidArgumentException('เฉพาะช่างที่รับผิดชอบเท่านั้นที่สามารถปิดงานซ่อมได้');
+        // InProgress or PendingFix -> Resolved requires Technician
+        if (($from === TicketStatus::InProgress || $from === TicketStatus::PendingFix) && $to === TicketStatus::Resolved) {
+            if (!$actor->isTechnician()) {
+                throw new InvalidArgumentException('เฉพาะช่างเทคนิคเท่านั้นที่สามารถกดซ่อมเสร็จได้');
             }
         }
 
-        // Resolved -> Closed or Resolved -> InProgress requires Ticket Owner
+        // Resolved -> Closed or Resolved -> PendingFix (or InProgress) requires Ticket Owner
         if ($from === TicketStatus::Resolved) {
             if ($ticket->user_id !== $actor->id) {
                 throw new InvalidArgumentException('เฉพาะเจ้าของใบแจ้งซ่อมเท่านั้นที่สามารถยืนยันหรือส่งงานกลับได้');

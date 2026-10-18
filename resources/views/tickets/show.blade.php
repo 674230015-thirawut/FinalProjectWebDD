@@ -34,6 +34,11 @@
                             <span class="w-2 h-2 rounded-full {{ $ticket->status->dotColor() }}"></span>
                             {{ $ticket->status->label() }}
                         </span>
+                        @if($ticket->status === \App\Enums\TicketStatus::PendingFix)
+                        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-300">
+                            จัดอยู่ในกลุ่ม: รอดำเนินการ (แก้ไข)
+                        </span>
+                        @endif
                         <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $ticket->priority->badgeClasses() }}">
                             ความสำคัญ: {{ $ticket->priority->label() }}
                         </span>
@@ -127,16 +132,16 @@
                     @endif
                 @endif
 
-                <!-- 2. Assigned -> InProgress (For Assigned Technician or Admin) -->
+                <!-- 2. Assigned -> InProgress (For Technician or Admin) -->
                 @if($ticket->status === \App\Enums\TicketStatus::Assigned)
-                    @if(Auth::user()->isAdmin() || (Auth::user()->isTechnician() && $ticket->technician_id === Auth::id()))
+                    @if(Auth::user()->isAdmin() || Auth::user()->isTechnician())
                     <form action="{{ route('tickets.update-status', $ticket) }}" method="POST" class="space-y-4">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="to_status" value="InProgress">
 
                         <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-xs text-indigo-900 leading-relaxed">
-                            <strong>คุณได้รับมอบหมายงานแล้ว:</strong> กดปุ่มเพื่อเปลี่ยนสถานะเป็น <strong>กำลังดำเนินการ (In Progress)</strong>
+                            <strong>งานซ่อมนี้อยู่ในขั้นตอนมอบหมายงาน:</strong> ช่างเทคนิคสามารถกดปุ่มเพื่อเปลี่ยนสถานะเป็น <strong>กำลังดำเนินการ (In Progress)</strong>
                         </div>
 
                         <div>
@@ -156,9 +161,9 @@
                     @endif
                 @endif
 
-                <!-- 3. InProgress -> Resolved (For Assigned Technician or Admin) -->
+                <!-- 3. InProgress -> Resolved (For Technician or Admin) -->
                 @if($ticket->status === \App\Enums\TicketStatus::InProgress)
-                    @if(Auth::user()->isAdmin() || (Auth::user()->isTechnician() && $ticket->technician_id === Auth::id()))
+                    @if(Auth::user()->isAdmin() || Auth::user()->isTechnician())
                     <form action="{{ route('tickets.update-status', $ticket) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                         @csrf
                         @method('PATCH')
@@ -179,8 +184,8 @@
                         </div>
 
                         <button type="submit" class="w-full px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
-                            <span class="text-base">✓</span>
-                            บันทึกผลการซ่อมเสร็จสิ้น (In Progress → Resolved)
+                            <span class="text-base font-black">✓</span>
+                            กดซ่อมเสร็จสิ้น / บันทึกผลการซ่อมเสร็จ (In Progress → Resolved)
                         </button>
                     </form>
                     @else
@@ -190,7 +195,46 @@
                     @endif
                 @endif
 
-                <!-- 4. Resolved -> Closed OR Resolved -> InProgress (For Ticket Owner or Admin) -->
+                <!-- 3.1 PendingFix -> Resolved (For Technician or Admin) -->
+                @if($ticket->status === \App\Enums\TicketStatus::PendingFix)
+                    @if(Auth::user()->isAdmin() || Auth::user()->isTechnician())
+                    <form action="{{ route('tickets.update-status', $ticket) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="to_status" value="Resolved">
+
+                        <div class="bg-rose-50 border-2 border-rose-300 rounded-xl p-4 text-xs text-rose-950 leading-relaxed shadow-sm">
+                            <div class="flex items-center gap-2 mb-1.5 font-black text-rose-800 text-sm">
+                                <span>⚠️</span>
+                                <span>พบปัญหาซ้ำ — สถานะ: รอดำเนินการแก้ไข (จัดอยู่ในกลุ่มรอดำเนินการ)</span>
+                            </div>
+                            <p>ผู้แจ้งได้รายงานว่าพบปัญหาซ้ำและส่งงานกลับมาแก้ไข โปรดตรวจสอบอาการและดำเนินการแก้ไขอุปกรณ์อีกครั้ง</p>
+                            <p class="mt-1 font-bold text-rose-700">เมื่อช่างดำเนินการแก้ไขปัญหาซ้ำเรียบร้อยแล้ว สามารถกดปุ่มยืนยันซ่อมเสร็จได้ทันที</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">บันทึกผลการแก้ไขปัญหาซ้ำ *</label>
+                            <textarea name="comment" rows="2" required placeholder="ระบุสิ่งที่ได้ดำเนินการแก้ไขเพิ่มเติม เช่น ตรวจเช็กระบบใหม่ เปลี่ยนสายแพร/อะไหล่สำรอง ทดสอบซ้ำใช้งานได้ตามปกติแล้ว" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-rose-500"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">แนบรูปถ่ายผลการแก้ไข (ถ้ามี)</label>
+                            <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100">
+                        </div>
+
+                        <button type="submit" class="w-full px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
+                            <span class="text-base font-black">✓</span>
+                            กดซ่อมเสร็จแล้ว (รอดำเนินการแก้ไข → ซ่อมเสร็จแล้ว)
+                        </button>
+                    </form>
+                    @else
+                    <div class="bg-rose-50 border border-rose-200 rounded-xl p-4 text-xs text-rose-800 leading-relaxed">
+                        <strong>พบปัญหาซ้ำ:</strong> กำลังรอดำเนินการแก้ไขโดยช่าง (<strong>{{ $ticket->technician->name ?? 'N/A' }}</strong>) โปรดรอช่างตรวจสอบและกดยืนยันงานเสร็จแล้ว
+                    </div>
+                    @endif
+                @endif
+
+                <!-- 4. Resolved -> Closed OR Resolved -> PendingFix (For Ticket Owner or Admin) -->
                 @if($ticket->status === \App\Enums\TicketStatus::Resolved)
                     @if(Auth::user()->isAdmin() || $ticket->user_id === Auth::id())
                     <div class="space-y-4" x-data="{ actionType: null }">
@@ -226,7 +270,7 @@
                                 </div>
                             </button>
 
-                            <!-- Button: Problem still exists -->
+                            <!-- Button: Repeat Problem still exists -> Send back to PendingFix -->
                             <button type="button" @click="actionType = (actionType === 'rework' ? null : 'rework')"
                                 :class="actionType === 'rework'
                                     ? 'bg-rose-600 text-white ring-4 ring-rose-300 shadow-lg scale-[1.02]'
@@ -236,11 +280,11 @@
                                     <span :class="actionType === 'rework' ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-700'"
                                         class="w-10 h-10 rounded-xl flex items-center justify-center text-xl font-black transition-all duration-200">✕</span>
                                     <div>
-                                        <div class="font-black text-base leading-tight">พบปัญหายังไม่หาย</div>
+                                        <div class="font-black text-base leading-tight">พบปัญหาซ้ำ / ส่งกลับไปแก้ไข</div>
                                         <div :class="actionType === 'rework' ? 'text-rose-100' : 'text-rose-700'" class="text-xs font-semibold">ส่งกลับให้ช่างแก้ไข</div>
                                     </div>
                                 </div>
-                                <div :class="actionType === 'rework' ? 'text-rose-100' : 'text-slate-400'" class="text-xs pl-1">อาการยังไม่หาย &bull; ส่งช่างซ่อมต่อ (In Progress)</div>
+                                <div :class="actionType === 'rework' ? 'text-rose-100' : 'text-slate-400'" class="text-xs pl-1">พบปัญหาซ้ำ อาการยังไม่หาย &bull; ส่งช่างแก้ไข (รอดำเนินการแก้ไข)</div>
                                 <div class="mt-3 flex items-center justify-between">
                                     <span :class="actionType === 'rework' ? 'bg-rose-500 text-white' : 'bg-rose-600 text-white'"
                                         class="px-4 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-all duration-200">
@@ -295,24 +339,24 @@
                             </div>
                         </form>
 
-                        <!-- Form B: Reject with Reason (Expands ONLY when user clicks 'rework') -->
+                        <!-- Form B: Reject with Reason (Expands ONLY when user clicks 'rework') -> Sets to PendingFix -->
                         <form x-show="actionType === 'rework'" x-cloak action="{{ route('tickets.update-status', $ticket) }}" method="POST"
                             class="space-y-4 bg-white p-5 rounded-2xl border-2 border-rose-200 shadow-sm animate-in fade-in duration-200">
                             @csrf
                             @method('PATCH')
-                            <input type="hidden" name="to_status" value="InProgress">
+                            <input type="hidden" name="to_status" value="PendingFix">
 
                             <div class="flex items-center justify-between pb-2 border-b border-rose-100">
-                                <span class="text-xs font-bold text-rose-800 uppercase tracking-wider">แบบฟอร์มส่งกลับให้ช่างแก้ไข</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800">ส่งกลับแก้ไข</span>
+                                <span class="text-xs font-bold text-rose-800 uppercase tracking-wider">แบบฟอร์มพบปัญหาซ้ำ ส่งกลับให้ช่างแก้ไข</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-200">รอดำเนินการแก้ไข</span>
                             </div>
 
-                            <div class="bg-rose-50 border border-rose-200 rounded-xl p-3 text-xs text-rose-800">
-                                <strong>คำแนะนำ:</strong> กรุณาระบุอาการที่ยังพบอยู่หรือสาเหตุที่ยังใช้งานไม่ได้ เพื่อให้ช่างเทคนิคดำเนินการตรวจสอบแก้ไขต่อ
+                            <div class="bg-rose-50 border border-rose-200 rounded-xl p-3 text-xs text-rose-800 leading-relaxed">
+                                <strong>พบปัญหาซ้ำ / ยังใช้งานไม่ได้:</strong> กรุณาระบุรายละเอียดปัญหาที่ยังพบอยู่ เพื่อส่งกลับให้ช่างเทคนิคดำเนินการตรวจสอบแก้ไขต่อ โดยสถานะจะเปลี่ยนเป็น <strong>รอดำเนินการแก้ไข</strong> (จัดอยู่ในกลุ่มรอดำเนินการ)
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">เหตุผลที่ส่งกลับแก้ไข *</label>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">เหตุผลหรืออาการปัญหาซ้ำที่พบ *</label>
                                 <textarea name="note" rows="2" required placeholder="เช่น พอลองเปิดเครื่องแล้วยังมีเสียงดังผิดปกติอยู่เหมือนเดิม..." class="w-full px-4 py-2 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-rose-500"></textarea>
                             </div>
 
@@ -321,9 +365,8 @@
                                     ← ยกเลิกการเลือก
                                 </button>
                                 <button type="submit" class="px-6 py-3 rounded-xl text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 active:bg-rose-800 shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2">
-                                    <span>✕</span> ส่งกลับให้ช่างแก้ไข
+                                    <span>✕</span> ยืนยันพบปัญหาซ้ำ ส่งกลับไปแก้ไข (รอดำเนินการแก้ไข)
                                 </button>
-
                             </div>
                         </form>
                     </div>
